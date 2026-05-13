@@ -255,7 +255,7 @@ const HomeView: React.FC<{ products: Product[], onNavigate: (path: string) => vo
                   onClick={() => window.open('https://chat.whatsapp.com/IdUOY2Q7Ct43sukFGmyhvs', '_blank')}
                   className="group bg-transparent border-2 border-[#00B8D4] text-[#00B8D4] px-10 py-4 font-black uppercase tracking-widest hover:bg-[#00B8D4]/10 transition-all rounded flex items-center gap-3 shadow-[0_0_15px_rgba(0,184,212,0.2)] animate-pulse hover:animate-none"
                 >
-                  🎰 Rifas Panucci
+                  Rifas Panucci
                   <ExternalLink className="w-5 h-5" />
                 </button>
               </div>
