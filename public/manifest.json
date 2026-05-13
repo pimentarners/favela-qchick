@@ -9,15 +9,15 @@
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "/panucci-logo.jpg",
+      "src": "https://i.postimg.cc/brDgBVTJ/Logo-Panucci.png",
       "sizes": "192x192",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/panucci-logo.jpg",
+      "src": "https://i.postimg.cc/brDgBVTJ/Logo-Panucci.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ]
