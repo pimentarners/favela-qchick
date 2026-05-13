@@ -22,7 +22,7 @@ type NavItem = {
 };
 
 // URL do Logo Atualizada
-const LOGO_URL = "/Logo-Panucci.png"; 
+const LOGO_URL = "https://i.postimg.cc/brDgBVTJ/Logo-Panucci.png"; 
 
 // --- Configuration ---
 const NAV_ITEMS: NavItem[] = [
