@@ -1,0 +1,24 @@
+
+{
+  "name": "Aquarismo Panucci",
+  "short_name": "Panucci",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/panucci-logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/panucci-logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}
