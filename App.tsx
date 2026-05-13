@@ -258,13 +258,6 @@ const HomeView: React.FC<{ products: Product[], onNavigate: (path: string) => vo
                   🎰 Rifas Panucci
                   <ExternalLink className="w-5 h-5" />
                 </button>
-                <button 
-                  onClick={() => window.open('https://api.whatsapp.com/send/?phone=5511971036922', '_blank')}
-                  className="group bg-transparent border border-gray-600 text-gray-300 px-10 py-4 font-bold uppercase tracking-widest hover:bg-white/5 transition-all rounded flex items-center gap-3"
-                >
-                  Fale Conosco
-                  <MessageCircle className="w-5 h-5" />
-                </button>
               </div>
             </motion.div>
         </div>
