@@ -106,7 +106,7 @@ interface ToastProps {
 }
 
 // --- CONSTANTS ---
-const PANUCCI_LOGO_URL = "https://i.postimg.cc/brDgBVTJ/Logo-Panucci.png"; 
+const PANUCCI_LOGO_URL = "/Logo-Panucci.png"; 
 const STORE_PIX_KEY = "11973828507";
 
 const CATEGORIES = [

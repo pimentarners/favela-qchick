@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'martins-monster-v1';
+const CACHE_NAME = 'panucci-v1';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html'
