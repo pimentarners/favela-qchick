@@ -10,7 +10,7 @@ const PWAInstallPrompt: React.FC = () => {
   const [isIOS, setIsIOS] = useState(false);
   const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
 
-  const LOGO_URL = "/panucci-logo.jpg";
+  const LOGO_URL = "https://i.postimg.cc/brDgBVTJ/Logo-Panucci.png";
 
   useEffect(() => {
     const userAgent = window.navigator.userAgent.toLowerCase();

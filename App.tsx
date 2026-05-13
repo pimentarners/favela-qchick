@@ -22,7 +22,7 @@ import { MOCK_ORDERS } from './data/mockOrders';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 import Sidebar from './components/Sidebar';
 import { useProductCache } from './hooks/useProductCache'; 
-import AIChat from './components/AIChat';
+
 
 const motion = framerMotion as any;
 
@@ -106,7 +106,7 @@ interface ToastProps {
 }
 
 // --- CONSTANTS ---
-const PANUCCI_LOGO_URL = "/panucci-logo.jpg"; 
+const PANUCCI_LOGO_URL = "https://i.postimg.cc/brDgBVTJ/Logo-Panucci.png"; 
 const STORE_PIX_KEY = "11973828507";
 
 const CATEGORIES = [
@@ -1252,7 +1252,7 @@ const AppContent = () => {
         
         <PWAInstallPrompt />
         <FloatingWhatsApp />
-        <AIChat />
+
     </div>
   );
 };
