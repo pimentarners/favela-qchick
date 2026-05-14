@@ -870,8 +870,8 @@ const AdminView: React.FC<{
                           <p className="text-xs uppercase font-bold">Sem Imagem</p>
                         </div>
                       )}
-                      <input type="file" accept="image/*" onChange={handleImageChange} className="absolute inset-0 opacity-0 cursor-pointer" />
-                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                      <input type="file" accept="image/*" onChange={handleImageChange} className="absolute inset-0 opacity-0 cursor-pointer z-10" />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
                          <p className="text-[#00B8D4] font-bold text-sm uppercase">Alterar Imagem</p>
                       </div>
                    </div>
