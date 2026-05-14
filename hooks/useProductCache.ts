@@ -8,7 +8,7 @@ export const useProductCache = () => {
   const [error, setError] = useState<string | null>(null);
   const mounted = useRef(true);
 
-  const refreshProducts = async () => {
+  const refreshProducts = async (_force?: boolean) => {
     if (mounted.current) setIsLoading(true);
     
     try {

@@ -2,50 +2,115 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
-*/
+ */
+
+// =============================================================
+// ENTIDADES DO BANCO DE DADOS (Supabase)
+// =============================================================
+
+export interface Category {
+  id: string;
+  created_at?: string;
+  name: string;
+  slug?: string;
+  description?: string;
+  sort_order?: number;
+}
+
+export interface TagDB {
+  id: string;
+  created_at?: string;
+  name: string;
+}
+
+export interface CollectionDB {
+  id: string;
+  created_at?: string;
+  name: string;
+  description?: string;
+}
 
 export interface Product {
   id: string;
+  created_at?: string;
   name: string;
-  category: 
-    | 'Peixes Marinhos Importados' 
-    | 'Peixes Marinhos Nacionais' 
-    | 'Primitivos' 
-    | 'Jumbos' 
-    | 'Ciclideos Africanos' 
-    | 'Amazonicos' 
-    | 'Cascudos' 
-    | 'Poecilideos' 
-    | 'Bettas' 
-    | 'Variados'
-    | 'Peixes' // Mantido para compatibilidade legado
-    | 'Equipamentos' 
-    | 'Aquários' 
-    | 'Plantas' 
-    | 'Alimentos'
-    | 'Substratos'; // Nova Categoria
-  price: number;
-  image: string;
   description: string;
+  price: number;
+  price_promo?: number;
   stock: number;
-  ph?: string; // Novo campo pH
-  paymentLink?: string; 
-  pixKey?: string; 
-  size?: string; 
+  limit?: number;
+  category_id?: string;
+  image: string;          // mapped from image_url
   
-  // Novos campos de Taxonomia
-  tags?: string[];
-  collections?: string[];
-
-  // Filtros Específicos - Peixes
+  // Campos específicos de aquarismo
+  size?: string;
+  ph?: string;
   aggressiveness?: 'Pacífico' | 'Semi-agressivo' | 'Agressivo';
   color?: string;
-
-  // Filtros Específicos - Equipamentos
+  
+  // Campos para equipamentos
   brand?: string;
   filtrationType?: 'Mecânica' | 'Biológica' | 'Química' | 'UV' | 'Completa';
   capacity?: string;
+  
+  // Pagamento
+  pixKey?: string;
+  paymentLink?: string;
+  
+  // Campos computados (vindos de JOINs)
+  category?: string;       // nome da categoria (via JOIN)
+  tags?: string[];         // nomes das tags
+  collections?: string[];  // nomes das coleções
 }
+
+// =============================================================
+// PEDIDOS
+// =============================================================
+
+export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+
+export interface OrderItem {
+  id?: string;
+  order_id?: string;
+  product_id?: string;
+  product_name: string;
+  quantity: number;
+  unit_price: number;
+  image_url?: string;
+}
+
+export interface Order {
+  id: string;
+  created_at?: string;
+  customer_id?: string;
+  status: OrderStatus;
+  total: number;
+  tracking_code?: string;
+  notes?: string;
+  items?: OrderItem[];
+  customer?: Customer;
+}
+
+// =============================================================
+// CLIENTES
+// =============================================================
+
+export interface Customer {
+  id: string;
+  created_at?: string;
+  name: string;
+  phone?: string;
+  email?: string;
+  address?: string;
+  city?: string;
+  state?: string;
+  zip_code?: string;
+  notes?: string;
+}
+
+// =============================================================
+// COMPONENTES (UI)
+// =============================================================
 
 export interface Artist {
   id: string;
@@ -67,23 +132,4 @@ export enum Section {
   STORE = 'store',
   SERVICES = 'services',
   ABOUT = 'about',
-}
-
-export interface OrderItem {
-  productId: string;
-  name: string;
-  quantity: number;
-  price: number;
-  image: string;
-}
-
-export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
-
-export interface Order {
-  id: string;
-  date: string;
-  status: OrderStatus;
-  total: number;
-  items: OrderItem[];
-  trackingCode?: string;
 }

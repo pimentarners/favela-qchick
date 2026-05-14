@@ -8,17 +8,16 @@ import {
   ChevronRight, Droplets, Fish, Layers, Search, 
   LayoutGrid, List, Plus, Trash2, Edit, CreditCard, ExternalLink,
   Copy, Ruler, AlertTriangle, TrendingUp, Package, Image as ImageIcon,
-  QrCode, Upload, Filter, Zap, Activity, Tag, Home, User, CheckCircle, Share2, ArrowLeft, ArrowDownCircle, AlertCircle, Info, Leaf, Award, Heart, Star, Database, RefreshCw, CheckSquare, Square, MessageCircle, Truck, Calendar, Clock, DollarSign, Save, AlertOctagon, UploadCloud, Skull
+  QrCode, Upload, Filter, Zap, Activity, Tag, Home, User, CheckCircle, Share2, ArrowLeft, ArrowDownCircle, AlertCircle, Info, Leaf, Award, Heart, Star, RefreshCw, CheckSquare, Square, MessageCircle, Truck, Calendar, Clock, DollarSign, Save, AlertOctagon
 } from 'lucide-react';
 import FluidBackground from './components/FluidBackground';
 import GradientText from './components/GlitchText';
 import ArtistCard from './components/ArtistCard';
 import Footer from './components/Footer';
 import PWAInstallPrompt from './components/PWAInstallPrompt'; 
-import { Product, Order } from './types';
+import { Product, Category } from './types';
 import { supabase } from './supabaseClient';
-import { saveProduct, deleteProduct, deleteProductBatch } from './services/supabaseService';
-import { MOCK_ORDERS } from './data/mockOrders';
+import { saveProduct, deleteProduct, deleteProductBatch, fetchCategories } from './services/supabaseService';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 import Sidebar from './components/Sidebar';
 import { useProductCache } from './hooks/useProductCache'; 
@@ -416,9 +415,15 @@ const AdminView: React.FC<{
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [categoryFilterAdmin, setCategoryFilterAdmin] = useState('Todos');
+  const [dbCategories, setDbCategories] = useState<Category[]>([]);
+
+  // Carrega categorias do Supabase
+  useEffect(() => {
+    fetchCategories().then(cats => setDbCategories(cats));
+  }, []);
 
   const [formData, setFormData] = useState<Partial<Product>>({
-    name: '', category: 'Jumbos', price: 0, stock: 1, description: '', 
+    name: '', category: '', category_id: '', price: 0, stock: 1, description: '', 
     ph: '', size: '', pixKey: STORE_PIX_KEY, tags: [], collections: []
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -438,7 +443,7 @@ const AdminView: React.FC<{
   };
 
   const resetForm = () => {
-    setFormData({ name: '', category: 'Jumbos', price: 0, stock: 1, description: '', ph: '', size: '', pixKey: STORE_PIX_KEY, tags: [], collections: [] });
+    setFormData({ name: '', category: '', category_id: '', price: 0, stock: 1, description: '', ph: '', size: '', pixKey: STORE_PIX_KEY, tags: [], collections: [] });
     setImageFile(null);
     setPreviewImage('');
     setEditingId(null);
@@ -454,13 +459,14 @@ const AdminView: React.FC<{
   };
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm("Tem certeza que deseja excluir este monstro?")) return;
+    if (!window.confirm("Tem certeza que deseja excluir este produto?")) return;
     removeProduct(id);
-    onShowToast('Produto removido.', 'success');
     try {
-      await deleteBaserowProduct(id);
+      await deleteProduct(id);
+      onShowToast('Produto removido com sucesso.', 'success');
     } catch (e) {
-      console.error("Falha na exclusão remota:", e);
+      console.error("Falha na exclusão:", e);
+      onShowToast('Erro ao remover produto.', 'error');
     }
   };
 
@@ -537,7 +543,12 @@ const AdminView: React.FC<{
     setIsLoadingAction(true);
     
     const productToSend = { ...formData, id: editingId || undefined };
-    const result = await saveProduct(productToSend, imageFile || undefined);
+    const result = await saveProduct(
+      productToSend, 
+      imageFile || undefined,
+      formData.tags || [],
+      formData.collections || []
+    );
     
     if (result.success) {
       onShowToast(editingId ? 'Produto atualizado!' : 'Produto criado!', 'success');
@@ -686,7 +697,7 @@ const AdminView: React.FC<{
                         className="bg-[#050505] border border-[#333] rounded px-4 py-2 text-sm text-white focus:border-[#00B8D4] outline-none"
                     >
                         <option value="Todos">Todas Categorias</option>
-                        {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                        {dbCategories.map(cat => <option key={cat.id} value={cat.name}>{cat.name}</option>)}
                     </select>
                 </div>
                 <div className="text-xs text-gray-500 font-bold uppercase whitespace-nowrap">{filteredList.length} Espécies</div>
@@ -758,8 +769,12 @@ const AdminView: React.FC<{
                       </div>
                       <div>
                         <label className="block text-xs text-gray-500 uppercase font-bold mb-1">Categoria</label>
-                        <select value={formData.category} onChange={e => setFormData({...formData, category: e.target.value as any})} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#00B8D4] outline-none appearance-none">
-                          {CATEGORIES.map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                        <select value={formData.category_id || ''} onChange={e => {
+                          const selectedCat = dbCategories.find(c => c.id === e.target.value);
+                          setFormData({...formData, category_id: e.target.value, category: selectedCat?.name || ''});
+                        }} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#00B8D4] outline-none appearance-none">
+                          <option value="">Selecione...</option>
+                          {dbCategories.map(cat => <option key={cat.id} value={cat.id}>{cat.name}</option>)}
                         </select>
                       </div>
                    </div>
@@ -881,80 +896,7 @@ const AdminView: React.FC<{
           </div>
         )}
 
-        {/* --- ABA INTEGRAÇÃO BD (Atualizada) --- */}
-        {adminTab === 'db' && (
-          <div className="max-w-2xl mx-auto bg-[#111] border border-[#333] p-8 rounded-2xl animate-fade-in">
-             <div className="flex items-center gap-4 mb-8">
-                <Database className="w-8 h-8 text-[#00B8D4]" />
-                <div>
-                  <h3 className="text-xl font-heading text-white">Configuração Baserow</h3>
-                  <p className="text-sm text-gray-500">Conecte sua base de dados para sincronização em tempo real.</p>
-                </div>
-             </div>
-
-             <div className="space-y-6">
-               <div>
-                  <label className="block text-xs text-gray-500 uppercase font-bold mb-2">API Token</label>
-                  <input type="text" value={configToken} onChange={e => setConfigToken(e.target.value)} className="w-full bg-[#050505] border border-[#333] rounded p-4 text-white focus:border-[#00B8D4] outline-none font-mono text-sm" placeholder="Token..." />
-               </div>
-               <div>
-                  <label className="block text-xs text-gray-500 uppercase font-bold mb-2">Table ID</label>
-                  <input type="text" value={configTableId} onChange={e => setConfigTableId(e.target.value)} className="w-full bg-[#050505] border border-[#333] rounded p-4 text-white focus:border-[#00B8D4] outline-none font-mono text-sm" placeholder="ID da Tabela..." />
-               </div>
-               
-               <div className="pt-4 border-t border-[#222] flex flex-col gap-4">
-                  <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                         <span className={`w-3 h-3 rounded-full ${configStatus === 'success' ? 'bg-[#00B8D4]' : configStatus === 'error' ? 'bg-red-500' : 'bg-gray-600'}`}></span>
-                         <span className="text-xs text-gray-400 uppercase font-bold">{configStatus === 'success' ? 'Conectado' : configStatus === 'error' ? 'Erro de Conexão' : 'Não Testado'}</span>
-                      </div>
-                      <div className="flex gap-2">
-                        <button onClick={onUpdateProducts} className="bg-[#111] text-gray-400 hover:text-white px-4 py-2 rounded font-bold uppercase tracking-wider text-xs border border-[#333]">
-                            Sincronizar Agora
-                        </button>
-                        <button onClick={handleTestConnection} className="bg-[#00B8D4]/10 text-[#00B8D4] hover:bg-[#00B8D4] hover:text-black px-6 py-2 rounded font-bold uppercase tracking-wider text-sm transition-colors border border-[#00B8D4]/20">
-                            Salvar & Testar
-                        </button>
-                      </div>
-                  </div>
-                  
-                  {configToken && configTableId && (
-                    <div className="mt-8 pt-8 border-t border-[#222]">
-                        <h4 className="text-white font-bold mb-2 flex items-center gap-2"><UploadCloud className="w-4 h-4"/> Ferramentas de Manutenção</h4>
-                        <p className="text-xs text-gray-500 mb-4">Use com cautela. Ações diretas no banco de dados.</p>
-                        
-                        <div className="space-y-3">
-                             {migrationProgress ? (
-                                <div className="bg-[#050505] border border-[#333] rounded-lg p-4 text-center">
-                                    <div className="animate-spin w-6 h-6 border-2 border-[#00B8D4] border-t-transparent rounded-full mx-auto mb-2"></div>
-                                    <p className="text-[#00B8D4] font-mono text-xs">{migrationProgress}</p>
-                                </div>
-                             ) : (
-                                <>
-                                    <button 
-                                        onClick={handleMigration}
-                                        disabled={isLoadingAction}
-                                        className="w-full bg-[#111] hover:bg-[#222] text-white border border-[#333] hover:border-[#00B8D4] py-3 rounded-lg font-bold uppercase text-xs tracking-widest transition-all"
-                                    >
-                                        Enviar Carga Inicial de Produtos
-                                    </button>
-                                    
-                                    <button 
-                                        onClick={handleFactoryReset}
-                                        disabled={isLoadingAction}
-                                        className="w-full bg-red-900 text-white border border-red-500 py-4 rounded-lg font-black uppercase text-sm tracking-widest transition-all flex items-center justify-center gap-2 hover:bg-red-700 shadow-[0_0_15px_rgba(255,0,0,0.4)]"
-                                    >
-                                        <Skull className="w-5 h-5" /> RESET TOTAL DE FÁBRICA (APAGAR TUDO)
-                                    </button>
-                                </>
-                             )}
-                        </div>
-                    </div>
-                  )}
-               </div>
-             </div>
-          </div>
-        )}
+        {/* Aba Integração BD removida — Supabase integrado diretamente */}
       </div>
     </main>
   );
