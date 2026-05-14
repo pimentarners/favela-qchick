@@ -1,56 +1,18 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Product } from '../types';
-import { fetchBaserowProducts, getBaserowConfig } from '../services/baserowService';
-import { LOCAL_PRODUCTS } from '../data/localProducts';
-
-let globalCache: { data: Product[]; timestamp: number } | null = null;
-const CACHE_DURATION = 1 * 60 * 1000; // Reduzido para 1 min para garantir frescor
-
-const DELETED_LOCAL_IDS_KEY = 'panucci_deleted_local_ids';
+import { fetchProducts } from '../services/supabaseService';
 
 export const useProductCache = () => {
-  const [products, setProducts] = useState<Product[]>(globalCache?.data || []);
-  const [isLoading, setIsLoading] = useState(!globalCache?.data);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const mounted = useRef(true);
 
-  const getDeletedIds = (): string[] => {
-    try {
-      const stored = localStorage.getItem(DELETED_LOCAL_IDS_KEY);
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
-    }
-  };
-
-  const refreshProducts = async (force = false) => {
-    if (!force && globalCache && (Date.now() - globalCache.timestamp < CACHE_DURATION)) {
-        if (mounted.current) {
-            setProducts(globalCache.data);
-            setIsLoading(false);
-        }
-        return;
-    }
-
+  const refreshProducts = async () => {
     if (mounted.current) setIsLoading(true);
     
     try {
-      const { token, tableId } = getBaserowConfig();
-      const deletedIds = getDeletedIds();
-      
-      let fetchedProducts: Product[] = [];
-
-      // Prioridade total para o Baserow se houver Token
-      if (token && tableId) {
-         const remote = await fetchBaserowProducts();
-         fetchedProducts = remote;
-      } else if (LOCAL_PRODUCTS.length > 0) {
-         // Fallback legado (não deve ocorrer se o token estiver setado)
-         fetchedProducts = LOCAL_PRODUCTS.filter(p => !deletedIds.includes(p.id));
-      }
-
-      globalCache = { data: fetchedProducts, timestamp: Date.now() };
+      const fetchedProducts = await fetchProducts();
       
       if (mounted.current) {
           setProducts(fetchedProducts);
@@ -65,37 +27,15 @@ export const useProductCache = () => {
   };
 
   const removeProduct = (id: string) => {
-    const current = getDeletedIds();
-    if (!current.includes(id)) {
-        const updated = [...current, id];
-        localStorage.setItem(DELETED_LOCAL_IDS_KEY, JSON.stringify(updated));
-    }
-    
-    const newProducts = products.filter(p => p.id !== id);
-    setProducts(newProducts);
-    if (globalCache) globalCache.data = newProducts;
+    setProducts(prev => prev.filter(p => p.id !== id));
   };
 
   const removeProducts = (ids: string[]) => {
-    const current = getDeletedIds();
-    const updated = [...current, ...ids.filter(id => !current.includes(id))];
-    localStorage.setItem(DELETED_LOCAL_IDS_KEY, JSON.stringify(updated));
-
-    const newProducts = products.filter(p => !ids.includes(p.id));
-    setProducts(newProducts);
-    if (globalCache) globalCache.data = newProducts;
+    setProducts(prev => prev.filter(p => !ids.includes(p.id)));
   };
 
-  // FUNÇÃO DE LIMPEZA GERAL
   const clearAllProducts = () => {
     setProducts([]);
-    if (globalCache) globalCache.data = [];
-    
-    // Limpa chaves específicas do app
-    localStorage.removeItem(DELETED_LOCAL_IDS_KEY);
-    
-    // Não limpa o token do Baserow aqui, apenas dados de produto. 
-    // Para limpar tokens, use o Reset de Fábrica no App.tsx
   };
 
   useEffect(() => {

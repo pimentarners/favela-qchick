@@ -17,7 +17,7 @@ import Footer from './components/Footer';
 import PWAInstallPrompt from './components/PWAInstallPrompt'; 
 import { Product, Order } from './types';
 import { supabase } from './supabaseClient';
-import { fetchBaserowProducts, saveBaserowConfig, getBaserowConfig, saveProductToBaserow, deleteBaserowProduct, testBaserowConnection, deleteBaserowBatch, deleteAllRemoteProducts } from './services/baserowService';
+import { saveProduct, deleteProduct, deleteProductBatch } from './services/supabaseService';
 import { MOCK_ORDERS } from './data/mockOrders';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
 import Sidebar from './components/Sidebar';
@@ -26,67 +26,7 @@ import { useProductCache } from './hooks/useProductCache';
 
 const motion = framerMotion as any;
 
-// --- DADOS PARA MIGRAÇÃO ---
-const RAW_MIGRATION_DATA = `SUBSTRATOS PREMIUM AQUARISMO PANUCCI 20KG
-TERRACOTA - 200,00
-NATURE SAND - 200,00
-BRANCO PEROLADO - 220,00
-
-LISTA PEIXES
-ARUANÃ PRATA 35/37CM - 350,00
-BAGRE CHICOTE (BARGADA) RAÇÃO 35/40CM - 1.000,00
-BICO DE PATO (JURUPENSEM) 32/37CM - 320,00
-CENTRODORAS BRACHIATUS 18/20CM - 300,00
-CACHARA PURA 25/30CM - 340,00
-CAPARARI 30/48CM - 1.000,00
-CASCUDO PANAQUE SCHAEFERI 35/40CM (RARIDADE) - 650,00
-CASCUDO PITANGA L24 35/37CM - 450,00
-CASCUDO HÍBRIDO L24xL25 34/36CM - 450,00
-CASCUDO PICOTA DE OURO L14 27/30CM - 320,00
-CASCUDO LUTEUS FASE 2 20/25CM - 350,00
-CASCUDO LUTEUS FASE 2 ESPECIAL 30/35CM - 600,00
-CACHORRA ARMATUS 30/34CM - 320,00
-DATNIOIDE MICROLEPIS 6/8CM - 750,00
-DATNIOIDE POLOTA 10/11CM - 750,00
-FACA PALHAÇO 14/16CM - 200,00
-FACA GOLD 20/22CM - 550,00
-JURUENSE CATFISH 25/35CM - 1.600,00
-JURUPOCA X JUNDIÁ ONÇA 28/30CM - 300,00
-LEPSOSTEUS OSSEUS (LONGNOSE GAR) 32/35CM - 2.500,00
-LINCE CATFISH 23/25CM - 600,00
-MUSSUM 60/65CM - 150,00
-MANDUBÉ 27/28CM - 700,00
-MANDUBÉ 34/36CM - 900,00
-MANDI AÇU 22/25CM - 300,00
-MOREIA FIRE EEL 45/48CM - 1.300,00
-OXYDORA NÍGER 22/25CM - 270,00
-OXYDORA KNERI 17/20CM - 350,00
-OSCAR RED TIGRE ALBINO (LUTINO) 10/12CM - 90,00
-OSCAR BRONZE 10/12CM - 70,00
-OSCAR BRONZE 17/20CM - 300,00
-OSCAR HÍBRIDO BUMBLEBEE X TIGRE 10/12CM TOP - 90,00
-OSCAR NEMO IMPORTADO 10/12CM - 450,00
-OSCAR RED TIGER ALBINO 15/18cm - 300,00
-OSCAR BRINZE FULL 28/30CM - 1.700,00
-PIRARARA SHORTBODY 15/18CM - 550,00
-PIRAÍBA 26/28CM - 580,00
-PIRAMUTABA 12/17CM - 130,00
-POLYPTERUS SENEGALUS COMUM 10/12CM - 80,00
-POLYPTERUS SENEGALUS COMUM 27/30CM - 270,00
-POLYPTERUS SENEGALUS ALBINO 23/26CM - 480,00
-POLYPTERUS BICHIR 35/38CM - 1.100,00
-POLYPTERUS ENDLICHERI 13/15CM - 250,00
-POLYPTERUS ENDLICHERI 27/30CM - 510,00
-POLYPTERUS ENDLICHERI 38/42CM - 750,00
-POLYPTERUS ORNATIPINNIS 35/38CM - 1.400,00
-TUCUNARÉ AÇU RORAIMA 18/20CM - 370,00
-TUCUNARE AÇU RORAIMA 30/34CM - 700,00
-TUCUNARÉ AMARELO 20/25CM - 270,00
-TUCUNARÉ AZUL 30/34CM - 300,00
-TUCUNARÉ FOGO 10/12CM (PADRÃO TOP) - 280,00
-TUCUNARÉ MOGU (MONO GRINGO X XINGU) 15/18CM - 330,00
-TUCUNARÉ MIRIANAE 33/35CM - 750,00
-TUCUNARÉ POPOCA AMAZÔNICO TOOP 30/33CM - 550,00`;
+// --- DADOS REMOVIDOS ---
 
 // --- TYPES & INTERFACES ---
 
@@ -470,14 +410,12 @@ const AdminView: React.FC<{
   const [loginUser, setLoginUser] = useState('');
   const [loginPass, setLoginPass] = useState('');
   
-  const [adminTab, setAdminTab] = useState<'dashboard' | 'list' | 'add' | 'db'>('dashboard');
+  const [adminTab, setAdminTab] = useState<'dashboard' | 'list' | 'add'>('dashboard');
   const [editingId, setEditingId] = useState<string | null>(null);
   const [isLoadingAction, setIsLoadingAction] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [categoryFilterAdmin, setCategoryFilterAdmin] = useState('Todos');
-
-  const [migrationProgress, setMigrationProgress] = useState<string>('');
 
   const [formData, setFormData] = useState<Partial<Product>>({
     name: '', category: 'Jumbos', price: 0, stock: 1, description: '', 
@@ -488,15 +426,6 @@ const AdminView: React.FC<{
   const [newTag, setNewTag] = useState('');
   
   const [pixKeyError, setPixKeyError] = useState<string>('');
-  const [configToken, setConfigToken] = useState('');
-  const [configTableId, setConfigTableId] = useState('');
-  const [configStatus, setConfigStatus] = useState<'idle' | 'success' | 'error'>('idle');
-
-  useEffect(() => {
-    const { token, tableId } = getBaserowConfig();
-    setConfigToken(token);
-    setConfigTableId(tableId);
-  }, []);
 
   const handleLogin = (e: React.FormEvent) => { 
      e.preventDefault(); 
@@ -535,127 +464,7 @@ const AdminView: React.FC<{
     }
   };
 
-  const handleClearAll = () => {
-      // Função depreciada visualmente em favor do Reset Total
-      handleFactoryReset();
-  };
-  
-  // NOVA FUNÇÃO DE RESET TOTAL
-  const handleFactoryReset = async () => {
-    // 1. Confirmação Simples
-    if (!window.confirm("ATENÇÃO: Você deseja apagar TODOS os produtos do banco de dados e limpar o site?")) {
-        return;
-    }
-    // 2. Confirmação Dupla
-    if (!window.confirm("Tem certeza absoluta? Essa ação não pode ser desfeita.")) {
-        return;
-    }
-
-    setIsLoadingAction(true);
-    setMigrationProgress('Limpando banco de dados remoto...');
-    
-    // Limpa Remoto
-    const remoteResult = await deleteAllRemoteProducts();
-    if (!remoteResult.success) {
-        onShowToast('Erro ao conectar com Baserow. Verifique se o Token está correto.', 'error');
-        setIsLoadingAction(false);
-        return;
-    }
-
-    setMigrationProgress('Limpando dados locais...');
-    
-    // Limpa Local (Estado + LocalStorage)
-    clearAllProducts();
-    
-    // NUKE: Limpa todo o LocalStorage para remover configs velhas da Metazoa
-    localStorage.clear();
-    
-    setMigrationProgress('Reiniciando sistema...');
-    
-    // Força reload
-    setTimeout(() => {
-        window.location.reload();
-    }, 1000);
-  };
-
-  // --- MIGRATION LOGIC ---
-  const handleMigration = async () => {
-    if (!window.confirm("Isso iniciará a migração de toda a lista crua para o Baserow. Continuar?")) return;
-    
-    setIsLoadingAction(true);
-    setMigrationProgress('Iniciando...');
-
-    const lines = RAW_MIGRATION_DATA.split('\n').filter(l => l.trim());
-    let currentCategory = 'Variados';
-    const itemsToProcess = [];
-
-    // 1. Parsing
-    for (const line of lines) {
-        if (line.includes('SUBSTRATOS')) {
-          currentCategory = 'Substratos';
-          continue;
-        }
-        if (line.includes('LISTA PEIXES')) {
-          currentCategory = 'Jumbos'; 
-          continue;
-        }
-
-        const parts = line.split('-');
-        if (parts.length < 2) continue;
-
-        const priceStr = parts[parts.length - 1].trim();
-        const namePart = parts.slice(0, parts.length - 1).join('-').trim();
-
-        const priceClean = priceStr.replace(/\./g, '').replace(',', '.');
-        const price = parseFloat(priceClean);
-
-        if (isNaN(price)) continue;
-
-        let name = namePart;
-        let size = '';
-
-        const sizeMatch = namePart.match(/(\d+[\/\d]*\s*[cC][mM])/i);
-        if (sizeMatch) {
-            size = sizeMatch[0];
-            name = namePart.replace(sizeMatch[0], '').trim();
-        }
-
-        name = name.replace(/\(\)/g, '').trim();
-
-        itemsToProcess.push({
-            name,
-            price,
-            size,
-            category: currentCategory,
-            description: size ? `Tamanho: ${size}` : ''
-        });
-    }
-
-    // 2. Sending
-    let count = 0;
-    for (const item of itemsToProcess) {
-        count++;
-        setMigrationProgress(`Enviando ${count} de ${itemsToProcess.length}: ${item.name}...`);
-        
-        await saveProductToBaserow({
-            name: item.name,
-            price: item.price,
-            category: item.category as any,
-            size: item.size, 
-            description: item.description,
-            stock: 1,
-            pixKey: STORE_PIX_KEY
-        });
-        
-        // Intervalo curto para não sobrecarregar
-        await new Promise(r => setTimeout(r, 400)); 
-    }
-
-    setMigrationProgress('Concluído!');
-    setIsLoadingAction(false);
-    onShowToast(`Migração finalizada! ${count} itens enviados.`, 'success');
-    onUpdateProducts();
-  };
+// --- MIGRATION REMOVIDA ---
 
   // --- BULK ACTIONS ---
   const filteredList = products.filter(p => {
@@ -689,7 +498,7 @@ const AdminView: React.FC<{
     removeProducts(idsToDelete);
     setSelectedIds([]);
 
-    await deleteBaserowBatch(idsToDelete);
+    await deleteProductBatch(idsToDelete);
     
     onShowToast(`${idsToDelete.length} itens removidos.`, 'success');
     setIsLoadingAction(false);
@@ -728,7 +537,7 @@ const AdminView: React.FC<{
     setIsLoadingAction(true);
     
     const productToSend = { ...formData, id: editingId || undefined };
-    const result = await saveProductToBaserow(productToSend, imageFile || undefined);
+    const result = await saveProduct(productToSend, imageFile || undefined);
     
     if (result.success) {
       onShowToast(editingId ? 'Produto atualizado!' : 'Produto criado!', 'success');
@@ -749,18 +558,7 @@ const AdminView: React.FC<{
     }
   };
 
-  const handleTestConnection = async () => {
-    setConfigStatus('idle');
-    const success = await testBaserowConnection();
-    setConfigStatus(success ? 'success' : 'error');
-    if (success) {
-      saveBaserowConfig(configToken, configTableId);
-      onShowToast('Conexão Baserow OK!', 'success');
-      onUpdateProducts();
-    } else {
-      onShowToast('Falha na conexão. Verifique Token/ID.', 'error');
-    }
-  };
+  // --- CONNECTION REMOVIDA ---
 
   const addTag = () => {
     if (newTag.trim() && !formData.tags?.includes(newTag.trim())) {
@@ -817,7 +615,6 @@ const AdminView: React.FC<{
             { id: 'dashboard', label: 'Visão Geral', icon: Activity },
             { id: 'list', label: 'Catálogo', icon: List },
             { id: 'add', label: editingId ? 'Editar Item' : 'Novo Item', icon: Plus },
-            { id: 'db', label: 'Integração BD', icon: Database },
           ].map(tab => (
             <button 
               key={tab.id}
