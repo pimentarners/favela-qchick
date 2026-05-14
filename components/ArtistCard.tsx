@@ -66,7 +66,7 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ artist, onClick, onAddToCart, o
       <div className="absolute inset-0 overflow-hidden z-0 bg-[#111]">
         {!imageLoaded && (
           <div className="absolute inset-0 flex items-center justify-center">
-             <div className="w-8 h-8 border-2 border-[#00B8D4] border-t-transparent rounded-full animate-spin"></div>
+             <div className="w-8 h-8 border-2 border-[#E8FF00] border-t-transparent rounded-full animate-spin"></div>
           </div>
         )}
         <motion.img 
@@ -98,7 +98,7 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ artist, onClick, onAddToCart, o
           {/* Botão Ver */}
           <motion.button 
             whileTap={{ scale: 0.9, backgroundColor: "#111" }}
-            className="relative bg-black text-white px-5 py-4 md:px-4 md:py-2 rounded-l-full flex items-center justify-center gap-2 border-r border-[#333] hover:text-[#00B8D4] transition-colors h-full min-w-[60px]"
+            className="relative bg-black text-white px-5 py-4 md:px-4 md:py-2 rounded-l-full flex items-center justify-center gap-2 border-r border-[#333] hover:text-[#E8FF00] transition-colors h-full min-w-[60px]"
             onClick={handleViewClick}
             title="Visualizar Detalhes"
           >
@@ -109,7 +109,7 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ artist, onClick, onAddToCart, o
           {/* Botão Compartilhar */}
           <motion.button 
             whileTap={{ scale: 0.9, backgroundColor: "#111" }}
-            className="relative bg-black text-white px-5 py-4 md:px-4 md:py-2 flex items-center justify-center gap-2 border-r border-[#333] hover:text-[#00B8D4] transition-colors h-full min-w-[60px]"
+            className="relative bg-black text-white px-5 py-4 md:px-4 md:py-2 flex items-center justify-center gap-2 border-r border-[#333] hover:text-[#E8FF00] transition-colors h-full min-w-[60px]"
             onClick={handleShareClick}
             onMouseEnter={() => setIsShareHovered(true)}
             onMouseLeave={() => setIsShareHovered(false)}
@@ -121,7 +121,7 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ artist, onClick, onAddToCart, o
           {/* Botão Comprar */}
           <motion.button 
             whileTap={{ scale: 0.95 }}
-            className={`relative px-6 py-4 md:px-4 md:py-2 rounded-r-full flex items-center justify-center gap-2 transition-colors h-full min-w-[60px] ${isAdded ? 'bg-green-500 text-white' : 'bg-[#00B8D4] text-black hover:bg-white'}`}
+            className={`relative px-6 py-4 md:px-4 md:py-2 rounded-r-full flex items-center justify-center gap-2 transition-colors h-full min-w-[60px] ${isAdded ? 'bg-green-500 text-white' : 'bg-[#E8FF00] text-black hover:bg-white'}`}
             onClick={handleQuickAdd}
             onMouseEnter={() => setIsBuyHovered(true)}
             onMouseLeave={() => setIsBuyHovered(false)}
@@ -159,7 +159,7 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ artist, onClick, onAddToCart, o
       {/* Info Overlay */}
       <div className="absolute inset-x-0 bottom-0 p-4 md:p-6 flex flex-col pointer-events-none z-10 bg-gradient-to-t from-black via-black/80 to-transparent">
         <motion.span 
-          className="text-[10px] font-mono text-[#00B8D4] font-bold uppercase tracking-[0.2em] mb-1 truncate"
+          className="text-[10px] font-mono text-[#E8FF00] font-bold uppercase tracking-[0.2em] mb-1 truncate"
           variants={{
             rest: { opacity: 0.8, x: 0 },
             hover: { opacity: 1, x: 0 }
@@ -173,7 +173,7 @@ const ArtistCard: React.FC<ArtistCardProps> = ({ artist, onClick, onAddToCart, o
             className="font-heading text-lg md:text-xl font-bold uppercase text-white leading-tight truncate"
             variants={{
               rest: { y: 0 },
-              hover: { y: -2, color: '#00B8D4' }
+              hover: { y: -2, color: '#E8FF00' }
             }}
           >
             {artist.name}

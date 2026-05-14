@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { motion as framerMotion, AnimatePresence } from 'framer-motion';
 import { 
   Home, Grid, Package, Users, MessageSquare, 
-  Settings, LifeBuoy, Fish, Droplets, Box, Youtube,
+  Settings, Shirt, Crown, Box,
   Menu, X, User, ShoppingBag, Truck
 } from 'lucide-react';
 // @ts-ignore
@@ -22,18 +22,18 @@ type NavItem = {
 };
 
 // URL do Logo Atualizada
-const LOGO_URL = "https://i.postimg.cc/brDgBVTJ/Logo-Panucci.png"; 
+const LOGO_URL = "https://i.postimg.cc/j28sZ4hF/Favela-q-chick.png"; 
 
 // --- Configuration ---
 const NAV_ITEMS: NavItem[] = [
   {
     id: 'home',
-    label: 'Início',
+    label: 'Inicio',
     icon: Home,
     subItems: [
-      { label: 'Visão Geral', href: '/', icon: Grid },
+      { label: 'Visao Geral', href: '/', icon: Grid },
       { label: 'Destaques', href: '/#featured', icon: Box },
-      { label: 'Sobre Nós', href: '/#sobre', icon: Users },
+      { label: 'Sobre Nos', href: '/#sobre', icon: Users },
       { label: 'Novidades', href: '/catalog', icon: Package, badge: 4 },
     ]
   },
@@ -42,20 +42,11 @@ const NAV_ITEMS: NavItem[] = [
     label: 'Loja',
     icon: Package,
     subItems: [
-      { label: 'Todo Catálogo', href: '/catalog', icon: Grid },
-      { label: 'Jumbos', href: '/catalog?cat=Jumbos', icon: Fish },
-      { label: 'Aquários', href: '/catalog?cat=Aquários', icon: Box },
-      { label: 'Equipamentos', href: '/catalog?cat=Equipamentos', icon: Settings },
-    ]
-  },
-  {
-    id: 'projects',
-    label: 'Serviços',
-    icon: Layers,
-    subItems: [
-      { label: 'Aquários Sob Medida', href: '/#projects', icon: Box },
-      { label: 'Lagos Ornamentais', href: '/#projects', icon: Droplets },
-      { label: 'Manutenção', href: '/#services', icon: CheckSquare },
+      { label: 'Todo Catalogo', href: '/catalog', icon: Grid },
+      { label: 'Camisetas', href: '/catalog?cat=Camisetas', icon: Shirt },
+      { label: 'Calcas', href: '/catalog?cat=Calcas', icon: Layers },
+      { label: 'Tenis', href: '/catalog?cat=Tenis', icon: Crown },
+      { label: 'Acessorios', href: '/catalog?cat=Acessorios', icon: Box },
     ]
   },
   {
@@ -72,7 +63,8 @@ const NAV_ITEMS: NavItem[] = [
     label: 'Comunidade',
     icon: Users,
     subItems: [
-      { label: 'Grupo WhatsApp', href: 'https://api.whatsapp.com/send/?phone=5511971036922', icon: MessageSquare },
+      { label: 'WhatsApp', href: 'https://api.whatsapp.com/send/?phone=5511977668767', icon: MessageSquare },
+      { label: 'Instagram', href: 'https://www.instagram.com/favelamaisqchick', icon: Users },
     ]
   },
 ];
@@ -82,9 +74,7 @@ const Sidebar: React.FC<{ isOpen: boolean; setIsOpen: (v: boolean) => void }> = 
   const navigate = useNavigate();
   const location = useLocation();
 
-  // Ao clicar na trilha (ícones da esquerda)
   const handleTier1Click = (id: string) => {
-    // Se clicar no mesmo ícone que já está ativo e a sidebar estiver aberta, fecha (toggle)
     if (activeTier1 === id && isOpen) {
         setIsOpen(false);
     } else {
@@ -93,15 +83,12 @@ const Sidebar: React.FC<{ isOpen: boolean; setIsOpen: (v: boolean) => void }> = 
     }
   };
 
-  // Ao clicar em um link do submenu
   const handleTier2Click = (href: string) => {
     if (href.startsWith('http')) {
       window.open(href, '_blank');
     } else {
       navigate(href);
     }
-    // "Recuar" a sidebar:
-    // No mobile fecha tudo, no Desktop colapsa o painel mantendo a trilha
     setIsOpen(false);
   };
 
@@ -122,42 +109,36 @@ const Sidebar: React.FC<{ isOpen: boolean; setIsOpen: (v: boolean) => void }> = 
         )}
       </AnimatePresence>
 
-      {/* 
-         Sidebar Container Principal 
-         - Mobile: Off-canvas (translate-x)
-         - Desktop: Sempre visível (flex), mas controla a largura interna
-      */}
       <div 
-        className={`fixed top-0 left-0 h-full z-50 flex bg-[#050505] transition-transform duration-300 shadow-[0_0_30px_rgba(0,0,0,0.5)] border-r border-[#00B8D4]/20
+        className={`fixed top-0 left-0 h-full z-50 flex bg-[#050505] transition-transform duration-300 shadow-[0_0_30px_rgba(0,0,0,0.5)] border-r border-[#E8FF00]/20
           ${isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}
         `}
       >
-        {/* TIER 1: Trilha de Ícones (Sempre visível no Desktop) */}
+        {/* TIER 1: Trilha de Icones */}
         <div className="w-20 flex flex-col items-center py-4 border-r border-[#222] bg-[#050505] z-20 shrink-0">
           {/* LOGO */}
           <div className="mb-6 px-1 w-full flex justify-center cursor-pointer" onClick={() => navigate('/')}>
              <img 
                src={LOGO_URL} 
-               alt="Aquarismo Panucci" 
-               className="w-16 h-auto object-contain drop-shadow-[0_0_10px_rgba(0,184,212,0.3)] hover:scale-105 transition-transform" 
+               alt="Favela +Q Chick" 
+               className="w-16 h-auto object-contain drop-shadow-[0_0_10px_rgba(232,255,0,0.3)] hover:scale-105 transition-transform" 
                onError={(e) => {
-                 (e.target as HTMLImageElement).src = "https://placehold.co/128x128/050505/00B8D4.png?text=AP";
+                 (e.target as HTMLImageElement).src = "https://placehold.co/128x128/050505/E8FF00.png?text=FQC";
                }}
              />
           </div>
 
-          {/* Navegação Principal */}
+          {/* Navegacao Principal */}
           <div className="flex-1 flex flex-col gap-4 w-full px-2 overflow-y-auto scrollbar-hide">
             {NAV_ITEMS.map((item) => {
-              const isActive = activeTier1 === item.id && isOpen; // Ativo apenas se sidebar aberta ou selecionado
               return (
                 <button
                   key={item.id}
                   onClick={() => handleTier1Click(item.id)}
                   className={`relative group flex flex-col items-center justify-center w-full aspect-square rounded-xl transition-all duration-200 ${
                     activeTier1 === item.id 
-                      ? 'bg-[#00B8D4] text-black shadow-[0_0_15px_rgba(0,184,212,0.4)]' 
-                      : 'text-gray-500 hover:bg-[#111] hover:text-[#00B8D4]'
+                      ? 'bg-[#E8FF00] text-black shadow-[0_0_15px_rgba(232,255,0,0.4)]' 
+                      : 'text-gray-500 hover:bg-[#111] hover:text-[#E8FF00]'
                   }`}
                 >
                   <item.icon className="w-6 h-6" />
@@ -170,11 +151,11 @@ const Sidebar: React.FC<{ isOpen: boolean; setIsOpen: (v: boolean) => void }> = 
             })}
           </div>
 
-          {/* Botões Inferiores */}
+          {/* Botoes Inferiores */}
           <div className="flex flex-col gap-4 w-full px-2 mt-auto pt-4 border-t border-[#222]">
             <button 
                 onClick={() => navigate('/admin')}
-                className="flex flex-col items-center justify-center w-full aspect-square rounded-xl text-gray-500 hover:bg-[#111] hover:text-[#00B8D4] transition-colors"
+                className="flex flex-col items-center justify-center w-full aspect-square rounded-xl text-gray-500 hover:bg-[#111] hover:text-[#E8FF00] transition-colors"
                 title="Admin"
             >
               <Settings className="w-6 h-6" />
@@ -182,7 +163,7 @@ const Sidebar: React.FC<{ isOpen: boolean; setIsOpen: (v: boolean) => void }> = 
           </div>
         </div>
 
-        {/* TIER 2: Painel de Submenu (Expansível) */}
+        {/* TIER 2: Painel de Submenu */}
         <div 
            className={`flex flex-col bg-[#0a0a0a] z-10 transition-all duration-300 ease-in-out overflow-hidden
              ${isOpen ? 'w-64 opacity-100' : 'w-0 opacity-0 md:w-0'} 
@@ -193,7 +174,6 @@ const Sidebar: React.FC<{ isOpen: boolean; setIsOpen: (v: boolean) => void }> = 
             <h2 className="text-xl font-heading font-bold text-white tracking-wider truncate">
               {activeGroup?.label}
             </h2>
-            {/* Botão fechar (visível apenas no mobile para UX, mas funcionalidade de clique fora já existe) */}
             <button onClick={() => setIsOpen(false)} className="md:hidden text-gray-500 hover:text-white">
                <X className="w-5 h-5" />
             </button>
@@ -211,14 +191,14 @@ const Sidebar: React.FC<{ isOpen: boolean; setIsOpen: (v: boolean) => void }> = 
                     onClick={() => handleTier2Click(sub.href)}
                     className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all group w-full text-left ${
                       isLinkActive
-                        ? 'bg-[#00B8D4]/10 text-[#00B8D4] border border-[#00B8D4]/20'
+                        ? 'bg-[#E8FF00]/10 text-[#E8FF00] border border-[#E8FF00]/20'
                         : 'text-gray-400 hover:bg-[#111] hover:text-white'
                     }`}
                   >
-                    <sub.icon className={`w-4 h-4 shrink-0 ${isLinkActive ? 'text-[#00B8D4]' : 'text-gray-500 group-hover:text-white'}`} />
+                    <sub.icon className={`w-4 h-4 shrink-0 ${isLinkActive ? 'text-[#E8FF00]' : 'text-gray-500 group-hover:text-white'}`} />
                     <span className="flex-1 truncate">{sub.label}</span>
                     {sub.badge && (
-                      <span className="bg-[#00B8D4] text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full">
+                      <span className="bg-[#E8FF00] text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full">
                         {sub.badge}
                       </span>
                     )}
@@ -228,19 +208,19 @@ const Sidebar: React.FC<{ isOpen: boolean; setIsOpen: (v: boolean) => void }> = 
             </div>
           </div>
 
-          {/* Card VIP (Fixo no fundo do painel) */}
+          {/* Card VIP */}
           <div className="p-4 border-t border-[#222] shrink-0 w-64">
-            <div className="bg-gradient-to-br from-[#111] to-[#000] border border-[#00B8D4]/20 rounded-xl p-4 relative overflow-hidden group">
+            <div className="bg-gradient-to-br from-[#111] to-[#000] border border-[#E8FF00]/20 rounded-xl p-4 relative overflow-hidden group">
                <div className="absolute top-0 right-0 p-2 opacity-20 group-hover:opacity-40 transition-opacity">
-                  <Fish className="w-12 h-12 text-[#00B8D4]" />
+                  <Crown className="w-12 h-12 text-[#E8FF00]" />
                </div>
-               <h3 className="text-white font-bold text-sm mb-1">Espécies Exclusivas</h3>
-               <p className="text-xs text-gray-400 mb-3">Receba novidades de peixes raros e promoções no seu WhatsApp.</p>
+               <h3 className="text-white font-bold text-sm mb-1">Pecas Exclusivas</h3>
+               <p className="text-xs text-gray-400 mb-3">Receba novidades de lancamentos e promocoes no seu WhatsApp.</p>
                <button 
-                 onClick={() => window.open('https://api.whatsapp.com/send/?phone=5511971036922', '_blank')}
-                 className="w-full bg-[#00B8D4] text-black text-xs font-bold py-2 rounded uppercase tracking-wider hover:bg-white transition-colors"
+                 onClick={() => window.open('https://api.whatsapp.com/send/?phone=5511977668767', '_blank')}
+                 className="w-full bg-[#E8FF00] text-black text-xs font-bold py-2 rounded uppercase tracking-wider hover:bg-white transition-colors"
                >
-                 Falar com a Panucci
+                 Falar com a Favela
                </button>
             </div>
           </div>

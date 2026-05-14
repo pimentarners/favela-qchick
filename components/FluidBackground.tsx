@@ -2,7 +2,7 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
-*/
+ */
 
 import React from 'react';
 import { motion as framerMotion } from 'framer-motion';
@@ -15,9 +15,9 @@ const FluidBackground: React.FC = () => {
       {/* Base Gradient - Dark Atmosphere */}
       <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-[#111111] to-[#050505]" />
 
-      {/* Aqua Spot - Aquarismo Panucci Blue */}
+      {/* Neon Yellow Spot - Favela +Q Chick Primary */}
       <motion.div
-        className="absolute top-[-20%] left-[-10%] w-[80vw] h-[80vw] bg-[#00B8D4] rounded-full mix-blend-screen filter blur-[150px] opacity-[0.08]"
+        className="absolute top-[-20%] left-[-10%] w-[80vw] h-[80vw] bg-[#E8FF00] rounded-full mix-blend-screen filter blur-[150px] opacity-[0.06]"
         animate={{
           scale: [1, 1.1, 1],
           x: [0, 30, 0],
@@ -30,9 +30,9 @@ const FluidBackground: React.FC = () => {
         }}
       />
 
-      {/* Purple Spot - Secondary Accent */}
+      {/* Red Spot - Secondary Accent */}
       <motion.div
-        className="absolute bottom-[-20%] right-[-10%] w-[90vw] h-[90vw] bg-[#9D4EDD] rounded-full mix-blend-screen filter blur-[150px] opacity-[0.05]"
+        className="absolute bottom-[-20%] right-[-10%] w-[90vw] h-[90vw] bg-[#FF3131] rounded-full mix-blend-screen filter blur-[150px] opacity-[0.04]"
         animate={{
           scale: [1, 1.2, 1],
           x: [0, -40, 0],

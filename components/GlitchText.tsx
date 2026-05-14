@@ -2,7 +2,7 @@
 /**
  * @license
  * SPDX-License-Identifier: Apache-2.0
-*/
+ */
 
 import React from 'react';
 import { motion } from 'framer-motion';
@@ -18,7 +18,7 @@ const GradientText: React.FC<GradientTextProps> = ({ text, as: Component = 'span
     <Component className={`relative inline-block tracking-tight isolate ${className}`}>
       {/* Neon Gradient Text */}
       <span
-        className="bg-gradient-to-r from-[#ffffff] via-[#00B8D4] to-[#ffffff] bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(0,184,212,0.3)]"
+        className="bg-gradient-to-r from-[#ffffff] via-[#E8FF00] to-[#ffffff] bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(232,255,0,0.3)]"
         style={{ 
           WebkitBackgroundClip: 'text',
           WebkitTextFillColor: 'transparent',

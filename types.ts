@@ -42,16 +42,11 @@ export interface Product {
   category_id?: string;
   image: string;          // mapped from image_url
   
-  // Campos específicos de aquarismo
-  size?: string;
-  ph?: string;
-  aggressiveness?: 'Pacífico' | 'Semi-agressivo' | 'Agressivo';
+  // Campos especificos de moda/streetwear
+  size?: string;          // P, M, G, GG, etc.
   color?: string;
-  
-  // Campos para equipamentos
   brand?: string;
-  filtrationType?: 'Mecânica' | 'Biológica' | 'Química' | 'UV' | 'Completa';
-  capacity?: string;
+  material?: string;      // Algodao, Poliester, etc.
   
   // Pagamento
   pixKey?: string;
@@ -60,7 +55,7 @@ export interface Product {
   // Campos computados (vindos de JOINs)
   category?: string;       // nome da categoria (via JOIN)
   tags?: string[];         // nomes das tags
-  collections?: string[];  // nomes das coleções
+  collections?: string[];  // nomes das colecoes
 }
 
 export interface CartItem extends Product {

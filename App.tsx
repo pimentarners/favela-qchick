@@ -4,11 +4,11 @@ import { motion as framerMotion, AnimatePresence } from 'framer-motion';
 // @ts-ignore
 import { HashRouter, Routes, Route, useNavigate, useLocation, useParams } from 'react-router-dom';
 import { 
-  ShoppingBag, Waves, Menu, X, Settings, LogIn, 
-  ChevronRight, Droplets, Fish, Layers, Search, 
+  ShoppingBag, Flame, Menu, X, Settings, LogIn, 
+  ChevronRight, Shirt, Crown, Layers, Search, 
   LayoutGrid, List, Plus, Trash2, Edit, CreditCard, ExternalLink,
   Copy, Ruler, AlertTriangle, TrendingUp, Package, Image as ImageIcon,
-  QrCode, Upload, Filter, Zap, Activity, Tag, Home, User, CheckCircle, Share2, ArrowLeft, ArrowDownCircle, AlertCircle, Info, Leaf, Award, Heart, Star, RefreshCw, CheckSquare, Square, MessageCircle, Truck, Calendar, Clock, DollarSign, Save, AlertOctagon
+  QrCode, Upload, Filter, Zap, Activity, Tag, Home, User, CheckCircle, Share2, ArrowLeft, ArrowDownCircle, AlertCircle, Info, Award, Heart, Star, RefreshCw, CheckSquare, Square, MessageCircle, Truck, Calendar, Clock, DollarSign, Save, AlertOctagon
 } from 'lucide-react';
 import FluidBackground from './components/FluidBackground';
 import GradientText from './components/GlitchText';
@@ -46,34 +46,27 @@ interface ToastProps {
 }
 
 // --- CONSTANTS ---
-const PANUCCI_LOGO_URL = "https://i.postimg.cc/brDgBVTJ/Logo-Panucci.png"; 
-const STORE_PIX_KEY = "11973828507";
+const FAVELA_LOGO_URL = "https://i.postimg.cc/j28sZ4hF/Favela-q-chick.png"; 
+const STORE_PIX_KEY = "+55 11 97766-8767";
 
 const CATEGORIES = [
-  'Jumbos',
-  'Peixes Marinhos Importados',
-  'Peixes Marinhos Nacionais',
-  'Primitivos',
-  'Ciclideos Africanos',
-  'Amazonicos',
-  'Cascudos',
-  'Poecilideos',
-  'Bettas',
-  'Variados',
-  'Equipamentos',
-  'Aquários',
-  'Plantas',
-  'Alimentos',
-  'Substratos'
+  'Camisetas',
+  'Calcas',
+  'Blusas',
+  'Tenis',
+  'Acessorios',
+  'Bones & Gorros',
+  'Conjuntos',
+  'Jaquetas'
 ];
 
 const COLLECTIONS_OPTIONS = [
   'Destaques da Semana',
-  'Raridades',
-  'Monstros',
-  'Iniciantes',
-  'Nano',
-  'Plantados'
+  'Edicao Limitada',
+  'Lancamentos',
+  'Promocoes',
+  'Collab',
+  'Essentials'
 ];
 
 // --- COMPONENTS AUXILIARES ---
@@ -82,7 +75,7 @@ const COLLECTIONS_OPTIONS = [
 // Marquee / Faixa Lumina
 const MarqueeStrip = () => {
   return (
-    <div className="w-full bg-[#00B8D4] py-3 overflow-hidden border-y border-black relative z-20">
+    <div className="w-full bg-[#E8FF00] py-3 overflow-hidden border-y border-black relative z-20">
       <div className="flex whitespace-nowrap">
         <motion.div 
           className="flex gap-12 items-center"
@@ -96,13 +89,13 @@ const MarqueeStrip = () => {
           {[...Array(4)].map((_, i) => (
             <React.Fragment key={i}>
               <span className="text-black font-heading font-bold text-lg md:text-xl uppercase tracking-widest flex items-center gap-4">
-                ESPÉCIES EXCLUSIVAS <Fish className="w-6 h-6 fill-black" />
+                DA QUEBRADA PRO MUNDO <Flame className="w-6 h-6 fill-black" />
               </span>
               <span className="text-black font-heading font-bold text-lg md:text-xl uppercase tracking-widest flex items-center gap-4">
-                ENVIO SEGURO PARA TODO BRASIL <Package className="w-6 h-6 fill-black" />
+                ENVIO PARA TODO BRASIL <Package className="w-6 h-6 fill-black" />
               </span>
               <span className="text-black font-heading font-bold text-lg md:text-xl uppercase tracking-widest flex items-center gap-4">
-                AQUARISMO DE ELITE <Layers className="w-6 h-6 fill-black" />
+                STREETWEAR DE ELITE <Crown className="w-6 h-6 fill-black" />
               </span>
             </React.Fragment>
           ))}
@@ -126,7 +119,7 @@ const ToastNotification: React.FC<ToastProps> = ({ id, message, type, onClose })
   };
 
   const bgColors = {
-    success: 'bg-[#00B8D4] border-[#00B8D4] text-black',
+    success: 'bg-[#E8FF00] border-[#E8FF00] text-black',
     error: 'bg-red-600 border-red-600 text-white',
     info: 'bg-white border-white text-black'
   };
@@ -167,35 +160,35 @@ const HomeView: React.FC<{ products: Product[], onNavigate: (path: string) => vo
               className="max-w-5xl w-full flex flex-col items-center"
             >
               <div className="mb-8 relative group">
-                <div className="absolute inset-0 bg-[#00B8D4] blur-[40px] opacity-10 rounded-full group-hover:opacity-20 transition-opacity"></div>
-                <img src={PANUCCI_LOGO_URL} alt="Aquarismo Panucci" className="w-48 h-48 md:w-64 md:h-64 object-contain relative z-10 drop-shadow-2xl" />
+                <div className="absolute inset-0 bg-[#E8FF00] blur-[40px] opacity-10 rounded-full group-hover:opacity-20 transition-opacity"></div>
+                <img src={FAVELA_LOGO_URL} alt="Favela +Q Chick" className="w-48 h-48 md:w-64 md:h-64 object-contain relative z-10 drop-shadow-2xl" />
               </div>
 
-              <div className="inline-flex items-center gap-2 text-[#00B8D4] font-sans text-xs uppercase tracking-[0.3em] mb-6 px-4 py-2 bg-[#00B8D4]/10 rounded-full border border-[#00B8D4]/20">
-                <Droplets className="w-3 h-3" /> Referência em Aquarismo
+              <div className="inline-flex items-center gap-2 text-[#E8FF00] font-sans text-xs uppercase tracking-[0.3em] mb-6 px-4 py-2 bg-[#E8FF00]/10 rounded-full border border-[#E8FF00]/20">
+                <Flame className="w-3 h-3" /> Da Quebrada Pro Mundo
               </div>
               
               <h1 className="text-4xl sm:text-6xl md:text-8xl font-heading font-black text-white mb-6 tracking-tight leading-[1] drop-shadow-lg">
-                AQUARISMO <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00B8D4] to-white">PANUCCI</span>
+                FAVELA <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E8FF00] to-white">+Q CHICK</span>
               </h1>
               
               <h2 className="text-base md:text-xl font-light text-gray-400 mb-8 max-w-2xl mx-auto leading-relaxed">
-                Peixes raros, equipamentos premium e paixão por aquarismo. Do tanque dos seus sonhos à espécie que você procura.
+                Nascida na rua, forjada na resiliencia. Streetwear de qualidade com a essencia da favela. Cada peca conta uma historia de corre e vitoria.
               </h2>
 
               <div className="flex flex-col md:flex-row gap-4">
                 <button 
                   onClick={() => onNavigate('/catalog')}
-                  className="group bg-[#00B8D4] text-black px-10 py-4 font-black uppercase tracking-widest hover:bg-white transition-all rounded flex items-center gap-3 shadow-[0_0_20px_rgba(0,184,212,0.3)] active:scale-95"
+                  className="group bg-[#E8FF00] text-black px-10 py-4 font-black uppercase tracking-widest hover:bg-white transition-all rounded flex items-center gap-3 shadow-[0_0_20px_rgba(232,255,0,0.3)] active:scale-95"
                 >
-                  Ver Catálogo
+                  Ver Catalogo
                   <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </button>
                 <button 
-                  onClick={() => window.open('https://chat.whatsapp.com/IdUOY2Q7Ct43sukFGmyhvs', '_blank')}
-                  className="group bg-transparent border-2 border-[#00B8D4] text-[#00B8D4] px-10 py-4 font-black uppercase tracking-widest hover:bg-[#00B8D4]/10 transition-all rounded flex items-center gap-3 shadow-[0_0_15px_rgba(0,184,212,0.2)] animate-pulse hover:animate-none"
+                  onClick={() => window.open('https://www.instagram.com/favelamaisqchick', '_blank')}
+                  className="group bg-transparent border-2 border-[#E8FF00] text-[#E8FF00] px-10 py-4 font-black uppercase tracking-widest hover:bg-[#E8FF00]/10 transition-all rounded flex items-center gap-3 shadow-[0_0_15px_rgba(232,255,0,0.2)] animate-pulse hover:animate-none"
                 >
-                  Rifas Panucci
+                  Nosso Instagram
                   <ExternalLink className="w-5 h-5" />
                 </button>
               </div>
@@ -208,10 +201,10 @@ const HomeView: React.FC<{ products: Product[], onNavigate: (path: string) => vo
       <section id="featured" className="py-20 md:py-24 px-4 max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-4">
           <div>
-             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-2">Seleção Premium</h2>
-             <p className="text-gray-500">Exemplares selecionados a dedo para você</p>
+             <h2 className="text-3xl md:text-4xl font-heading font-bold text-white mb-2">Selecao Premium</h2>
+             <p className="text-gray-500">Pecas selecionadas a dedo para voce</p>
           </div>
-          <button onClick={() => onNavigate('/catalog')} className="text-[#00B8D4] hover:text-white flex items-center gap-2 text-sm font-bold uppercase tracking-wider transition-colors">
+          <button onClick={() => onNavigate('/catalog')} className="text-[#E8FF00] hover:text-white flex items-center gap-2 text-sm font-bold uppercase tracking-wider transition-colors">
             Ver Todos <ChevronRight className="w-4 h-4" />
           </button>
         </div>
@@ -285,19 +278,19 @@ const CatalogView: React.FC<{ products: Product[], onAddToCart: (p: Product) => 
     <main className="pt-20 pb-24 px-4 md:px-6 min-h-screen">
       <div className="max-w-7xl mx-auto">
         <div className="mb-12 border-b border-[#222] pb-8">
-           <h2 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4">Catálogo Completo</h2>
-           <p className="text-gray-400 max-w-xl text-lg">Selecione sua categoria ou busque pelo nome da espécie.</p>
+           <h2 className="text-4xl md:text-5xl font-heading font-bold text-white mb-4">Catalogo Completo</h2>
+           <p className="text-gray-400 max-w-xl text-lg">Selecione sua categoria ou busque pelo nome do produto.</p>
         </div>
 
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 gap-6">
           <div className="w-full flex flex-col gap-4">
             <div className="relative group w-full">
-               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within:text-[#00B8D4] transition-colors" />
-               <input type="text" placeholder="Buscar espécie (Ex: Tucunaré, Aruanã...)" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full bg-[#111] border border-[#333] rounded-lg py-4 pl-12 pr-6 text-white focus:border-[#00B8D4] focus:outline-none transition-all placeholder-gray-600 shadow-inner" />
+               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500 group-focus-within:text-[#E8FF00] transition-colors" />
+               <input type="text" placeholder="Buscar peca (Ex: Camiseta, Calca...)" value={searchTerm} onChange={(e) => setSearchTerm(e.target.value)} className="w-full bg-[#111] border border-[#333] rounded-lg py-4 pl-12 pr-6 text-white focus:border-[#E8FF00] focus:outline-none transition-all placeholder-gray-600 shadow-inner" />
             </div>
             <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide">
               {['Todos', ...CATEGORIES].map(cat => (
-                <button key={cat} onClick={() => setCategoryFilter(cat)} className={`px-5 py-2 rounded-full border text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap flex-shrink-0 ${categoryFilter === cat ? 'bg-[#00B8D4] border-[#00B8D4] text-black' : 'bg-[#111] border-[#333] text-gray-400 hover:border-[#00B8D4] hover:text-[#00B8D4]'}`}>{cat}</button>
+                <button key={cat} onClick={() => setCategoryFilter(cat)} className={`px-5 py-2 rounded-full border text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap flex-shrink-0 ${categoryFilter === cat ? 'bg-[#E8FF00] border-[#E8FF00] text-black' : 'bg-[#111] border-[#333] text-gray-400 hover:border-[#E8FF00] hover:text-[#E8FF00]'}`}>{cat}</button>
               ))}
             </div>
           </div>
@@ -307,10 +300,10 @@ const CatalogView: React.FC<{ products: Product[], onAddToCart: (p: Product) => 
           <>
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {currentProducts.map((p) => (
-                <div key={p.id} className="rounded-xl overflow-hidden shadow-lg border border-[#222] bg-[#0a0a0a] hover:border-[#00B8D4] transition-all group">
+                <div key={p.id} className="rounded-xl overflow-hidden shadow-lg border border-[#222] bg-[#0a0a0a] hover:border-[#E8FF00] transition-all group">
                   <ArtistCard artist={{ id: p.id, name: p.name, genre: `R$ ${p.price.toFixed(2)}`, image: p.image, day: p.category || '', description: p.description || '' }} onClick={() => onNavigate(`/product/${p.id}`)} onAddToCart={() => onAddToCart(p)} onShare={() => onNavigate(`/product/${p.id}`)} />
                   <div className="p-4 bg-[#0a0a0a]">
-                     <p className="text-[10px] text-[#00B8D4] font-bold uppercase tracking-wider mb-1 truncate">{p.category}</p>
+                     <p className="text-[10px] text-[#E8FF00] font-bold uppercase tracking-wider mb-1 truncate">{p.category}</p>
                      <h3 className="text-white font-bold truncate mb-2 text-sm md:text-base">{p.name}</h3>
                      <p className="text-gray-400 text-sm font-medium">R$ {p.price.toFixed(2)}</p>
                   </div>
@@ -320,8 +313,8 @@ const CatalogView: React.FC<{ products: Product[], onAddToCart: (p: Product) => 
             {hasMore && (
               <div ref={observerRef} className="mt-16 flex flex-col items-center justify-center gap-4 py-8">
                 <div className="flex flex-col items-center">
-                   <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#00B8D4] mb-2"></div>
-                   <p className="text-xs text-gray-500 uppercase tracking-wider">Carregando mais espécies...</p>
+                   <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-[#E8FF00] mb-2"></div>
+                   <p className="text-xs text-gray-500 uppercase tracking-wider">Carregando mais produtos...</p>
                 </div>
               </div>
             )}
@@ -330,12 +323,12 @@ const CatalogView: React.FC<{ products: Product[], onAddToCart: (p: Product) => 
           <div className="text-center py-32 text-gray-500 flex flex-col items-center">
             {isLoading ? (
                <>
-                 <RefreshCw className="w-8 h-8 animate-spin mb-4 text-[#00B8D4]" />
+                 <RefreshCw className="w-8 h-8 animate-spin mb-4 text-[#E8FF00]" />
                  <p>Carregando catálogo...</p>
                </>
             ) : (
                <>
-                 <Fish className="w-12 h-12 mb-4 opacity-20" />
+                 <Shirt className="w-12 h-12 mb-4 opacity-20" />
                  <p>Nenhum item encontrado nesta categoria.</p>
                </>
             )}
@@ -354,7 +347,7 @@ const ProductDetailView: React.FC<{ products: Product[], onNavigate: (path: stri
   return (
     <main className="pt-24 pb-32 px-4 md:px-6 min-h-screen">
       <div className="max-w-7xl mx-auto">
-        <button onClick={() => onNavigate('/catalog')} className="mb-8 flex items-center gap-2 text-[#00B8D4] uppercase text-xs font-bold tracking-widest hover:text-white transition-colors">
+        <button onClick={() => onNavigate('/catalog')} className="mb-8 flex items-center gap-2 text-[#E8FF00] uppercase text-xs font-bold tracking-widest hover:text-white transition-colors">
           <ArrowLeft className="w-4 h-4" /> Voltar ao Catálogo
         </button>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
@@ -363,20 +356,20 @@ const ProductDetailView: React.FC<{ products: Product[], onNavigate: (path: stri
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-50" />
            </div>
            <div className="flex flex-col text-white">
-              <div className="inline-flex items-center gap-2 text-[#00B8D4] font-mono text-xs uppercase tracking-[0.2em] mb-4">
+              <div className="inline-flex items-center gap-2 text-[#E8FF00] font-mono text-xs uppercase tracking-[0.2em] mb-4">
                  <Tag className="w-3 h-3" /> {product.category}
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6 leading-tight text-white">{product.name}</h1>
               <div className="flex items-center gap-6 mb-8 pb-8 border-b border-[#222]">
-                 <p className="text-4xl font-bold text-[#00B8D4] drop-shadow-[0_0_15px_rgba(0,184,212,0.3)]">R$ {product.price.toFixed(2)}</p>
+                 <p className="text-4xl font-bold text-[#E8FF00] drop-shadow-[0_0_15px_rgba(0,184,212,0.3)]">R$ {product.price.toFixed(2)}</p>
                  {product.stock > 0 ? (
-                   <span className="px-4 py-2 bg-[#00B8D4]/10 text-[#00B8D4] text-xs font-bold uppercase rounded-full border border-[#00B8D4]/20 flex items-center gap-2"><div className="w-2 h-2 bg-[#00B8D4] rounded-full animate-pulse" /> Disponível</span>
+                   <span className="px-4 py-2 bg-[#E8FF00]/10 text-[#E8FF00] text-xs font-bold uppercase rounded-full border border-[#E8FF00]/20 flex items-center gap-2"><div className="w-2 h-2 bg-[#E8FF00] rounded-full animate-pulse" /> Disponível</span>
                  ) : (
                    <span className="px-4 py-2 bg-red-900/20 text-red-500 text-xs font-bold uppercase rounded-full border border-red-900/30">Esgotado</span>
                  )}
               </div>
               <div className="mb-10">
-                 <h3 className="text-sm font-bold uppercase tracking-widest text-gray-500 mb-4">Ficha Técnica</h3>
+                 <h3 className="text-sm font-bold uppercase tracking-widest text-gray-500 mb-4">Detalhes do Produto</h3>
                  <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed text-lg whitespace-pre-line"><p>{product.description || "Descrição não disponível."}</p></div>
               </div>
               {(product.size || product.ph) && (
@@ -386,7 +379,7 @@ const ProductDetailView: React.FC<{ products: Product[], onNavigate: (path: stri
                 </div>
               )}
               <div className="mt-auto flex flex-col gap-4 fixed bottom-0 left-0 right-0 p-4 bg-[#050505]/90 backdrop-blur-md border-t border-[#333] z-50 md:static md:bg-transparent md:p-0 md:border-0">
-                 <button onClick={() => onAddToCart(product)} disabled={product.stock <= 0} className="w-full bg-[#00B8D4] hover:bg-white hover:text-black text-black py-4 md:py-5 rounded-xl font-black uppercase tracking-widest text-lg transition-all shadow-[0_0_30px_rgba(0,184,212,0.3)] hover:shadow-[0_0_50px_rgba(0,184,212,0.6)] transform hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"><ShoppingBag className="w-6 h-6" /> {product.stock > 0 ? 'Adicionar ao Carrinho' : 'Indisponível'}</button>
+                 <button onClick={() => onAddToCart(product)} disabled={product.stock <= 0} className="w-full bg-[#E8FF00] hover:bg-white hover:text-black text-black py-4 md:py-5 rounded-xl font-black uppercase tracking-widest text-lg transition-all shadow-[0_0_30px_rgba(0,184,212,0.3)] hover:shadow-[0_0_50px_rgba(0,184,212,0.6)] transform hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"><ShoppingBag className="w-6 h-6" /> {product.stock > 0 ? 'Adicionar ao Carrinho' : 'Indisponível'}</button>
                  <button onClick={() => { navigator.clipboard.writeText(product.pixKey || STORE_PIX_KEY); onShowToast('Chave Pix copiada.', 'success'); }} className="w-full bg-[#111] hover:bg-[#222] text-gray-400 hover:text-white py-3 rounded-xl font-bold uppercase tracking-widest transition-all border border-[#333] flex items-center justify-center gap-2 text-sm"><PixIcon className="w-4 h-4" /> Pagamento Direto (Pix)</button>
               </div>
               <div className="h-24 md:hidden" />
@@ -435,7 +428,7 @@ const AdminView: React.FC<{
 
   const handleLogin = (e: React.FormEvent) => { 
      e.preventDefault(); 
-     if (loginUser === 'jhonathan@panucci.com' && loginPass === 'snakehead2026') { 
+     if (loginUser === 'admin@favelaqchick.com' && loginPass === 'favelaqchick2026') { 
         setIsAuthenticated(true); 
         onShowToast('Acesso Admin Concedido', 'success'); 
      } else { 
@@ -599,13 +592,13 @@ const AdminView: React.FC<{
     <main className="pt-32 pb-24 px-4 min-h-screen flex items-center justify-center">
       <div className="max-w-md w-full bg-[#111] border border-[#333] p-8 rounded-lg shadow-2xl">
         <div className="text-center mb-8">
-           <img src={PANUCCI_LOGO_URL} alt="Admin" className="h-24 mx-auto mb-4 object-contain" />
+           <img src={FAVELA_LOGO_URL} alt="Admin" className="h-24 mx-auto mb-4 object-contain" />
            <h2 className="text-2xl font-heading text-white">Admin Access</h2>
         </div>
         <form onSubmit={handleLogin} className="space-y-4">
-          <input type="text" placeholder="Email" value={loginUser} onChange={e => setLoginUser(e.target.value)} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#00B8D4] outline-none" />
-          <input type="password" placeholder="Senha" value={loginPass} onChange={e => setLoginPass(e.target.value)} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#00B8D4] outline-none" />
-          <button type="submit" className="w-full bg-[#00B8D4] text-black py-3 rounded font-bold uppercase hover:bg-white transition-colors">Entrar</button>
+          <input type="text" placeholder="Email" value={loginUser} onChange={e => setLoginUser(e.target.value)} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#E8FF00] outline-none" />
+          <input type="password" placeholder="Senha" value={loginPass} onChange={e => setLoginPass(e.target.value)} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#E8FF00] outline-none" />
+          <button type="submit" className="w-full bg-[#E8FF00] text-black py-3 rounded font-bold uppercase hover:bg-white transition-colors">Entrar</button>
         </form>
       </div>
     </main>
@@ -616,8 +609,8 @@ const AdminView: React.FC<{
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8 border-b border-[#222] pb-6">
            <div>
-             <h1 className="text-3xl font-heading text-white">Painel <span className="text-[#00B8D4]">Gerencial</span></h1>
-             <p className="text-xs text-gray-500 mt-1 uppercase tracking-widest">Aquarismo Panucci v2.0</p>
+             <h1 className="text-3xl font-heading text-white">Painel <span className="text-[#E8FF00]">Gerencial</span></h1>
+             <p className="text-xs text-gray-500 mt-1 uppercase tracking-widest">Favela +Q Chick v1.0</p>
            </div>
            <button onClick={() => setIsAuthenticated(false)} className="bg-[#111] hover:bg-red-900/20 text-gray-400 hover:text-red-500 px-4 py-2 rounded-lg text-sm font-bold uppercase tracking-wider border border-[#333] transition-colors">Sair</button>
         </div>
@@ -631,7 +624,7 @@ const AdminView: React.FC<{
             <button 
               key={tab.id}
               onClick={() => { setAdminTab(tab.id as any); if (tab.id === 'add' && !editingId) resetForm(); }}
-              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-sm uppercase tracking-wider transition-all whitespace-nowrap ${adminTab === tab.id ? 'bg-[#00B8D4] text-black shadow-[0_0_15px_rgba(0,184,212,0.3)]' : 'bg-[#111] text-gray-500 hover:text-white border border-[#222]'}`}
+              className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-sm uppercase tracking-wider transition-all whitespace-nowrap ${adminTab === tab.id ? 'bg-[#E8FF00] text-black shadow-[0_0_15px_rgba(0,184,212,0.3)]' : 'bg-[#111] text-gray-500 hover:text-white border border-[#222]'}`}
             >
               <tab.icon className="w-4 h-4" /> {tab.label}
             </button>
@@ -642,14 +635,14 @@ const AdminView: React.FC<{
         {adminTab === 'dashboard' && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in">
              <div className="bg-[#111] p-6 rounded-2xl border border-[#333] relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 opacity-10"><Package className="w-16 h-16 text-[#00B8D4]" /></div>
+                <div className="absolute top-0 right-0 p-4 opacity-10"><Package className="w-16 h-16 text-[#E8FF00]" /></div>
                 <h3 className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Total de Itens</h3>
                 <p className="text-4xl font-heading text-white">{products.length}</p>
              </div>
              <div className="bg-[#111] p-6 rounded-2xl border border-[#333] relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 opacity-10"><DollarSign className="w-16 h-16 text-[#00B8D4]" /></div>
+                <div className="absolute top-0 right-0 p-4 opacity-10"><DollarSign className="w-16 h-16 text-[#E8FF00]" /></div>
                 <h3 className="text-gray-500 text-xs font-bold uppercase tracking-widest mb-2">Valor em Estoque</h3>
-                <p className="text-4xl font-heading text-[#00B8D4]">R$ {totalStockValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
+                <p className="text-4xl font-heading text-[#E8FF00]">R$ {totalStockValue.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}</p>
              </div>
              <div className="bg-[#111] p-6 rounded-2xl border border-[#333] relative overflow-hidden">
                 <div className="absolute top-0 right-0 p-4 opacity-10"><AlertTriangle className="w-16 h-16 text-red-500" /></div>
@@ -689,19 +682,19 @@ const AdminView: React.FC<{
                           placeholder="Buscar por nome..." 
                           value={searchTerm}
                           onChange={e => setSearchTerm(e.target.value)}
-                          className="w-full bg-[#050505] border border-[#333] rounded pl-10 pr-4 py-2 text-sm text-white focus:border-[#00B8D4] outline-none"
+                          className="w-full bg-[#050505] border border-[#333] rounded pl-10 pr-4 py-2 text-sm text-white focus:border-[#E8FF00] outline-none"
                        />
                     </div>
                     <select 
                         value={categoryFilterAdmin} 
                         onChange={e => setCategoryFilterAdmin(e.target.value)}
-                        className="bg-[#050505] border border-[#333] rounded px-4 py-2 text-sm text-white focus:border-[#00B8D4] outline-none"
+                        className="bg-[#050505] border border-[#333] rounded px-4 py-2 text-sm text-white focus:border-[#E8FF00] outline-none"
                     >
                         <option value="Todos">Todas Categorias</option>
                         {dbCategories.map(cat => <option key={cat.id} value={cat.name}>{cat.name}</option>)}
                     </select>
                 </div>
-                <div className="text-xs text-gray-500 font-bold uppercase whitespace-nowrap">{filteredList.length} Espécies</div>
+                <div className="text-xs text-gray-500 font-bold uppercase whitespace-nowrap">{filteredList.length} Produtos</div>
              </div>
              <div className="overflow-x-auto">
                <table className="w-full text-left text-sm text-gray-400">
@@ -712,7 +705,7 @@ const AdminView: React.FC<{
                           type="checkbox" 
                           onChange={handleSelectAll} 
                           checked={filteredList.length > 0 && selectedIds.length === filteredList.length}
-                          className="accent-[#00B8D4] h-4 w-4"
+                          className="accent-[#E8FF00] h-4 w-4"
                         />
                      </th>
                      <th className="p-4">Imagem</th>
@@ -725,28 +718,28 @@ const AdminView: React.FC<{
                  </thead>
                  <tbody className="divide-y divide-[#222]">
                    {filteredList.map(product => (
-                     <tr key={product.id} className={`hover:bg-[#151515] transition-colors ${selectedIds.includes(product.id) ? 'bg-[#00B8D4]/5' : ''}`}>
+                     <tr key={product.id} className={`hover:bg-[#151515] transition-colors ${selectedIds.includes(product.id) ? 'bg-[#E8FF00]/5' : ''}`}>
                        <td className="p-4">
                           <input 
                             type="checkbox" 
                             checked={selectedIds.includes(product.id)}
                             onChange={() => handleSelect(product.id)}
-                            className="accent-[#00B8D4] h-4 w-4"
+                            className="accent-[#E8FF00] h-4 w-4"
                           />
                        </td>
                        <td className="p-4">
                          <div className="w-10 h-10 rounded bg-black border border-[#333] overflow-hidden">
-                           <img src={product.image || PANUCCI_LOGO_URL} className="w-full h-full object-cover" />
+                           <img src={product.image || FAVELA_LOGO_URL} className="w-full h-full object-cover" />
                          </div>
                        </td>
                        <td className="p-4 font-medium text-white">{product.name}</td>
                        <td className="p-4"><span className="px-2 py-1 bg-[#222] rounded text-[10px] uppercase font-bold text-gray-300">{product.category}</span></td>
-                       <td className="p-4 text-[#00B8D4] font-bold">R$ {product.price.toFixed(2)}</td>
+                       <td className="p-4 text-[#E8FF00] font-bold">R$ {product.price.toFixed(2)}</td>
                        <td className="p-4">
                          <span className={`font-bold ${product.stock < 5 ? 'text-red-500' : 'text-gray-400'}`}>{product.stock}</span>
                        </td>
                        <td className="p-4 text-right space-x-2">
-                         <button onClick={() => handleEdit(product)} className="text-[#00B8D4] hover:text-white p-1" title="Editar"><Edit className="w-4 h-4" /></button>
+                         <button onClick={() => handleEdit(product)} className="text-[#E8FF00] hover:text-white p-1" title="Editar"><Edit className="w-4 h-4" /></button>
                          <button onClick={() => handleDelete(product.id)} className="text-red-500 hover:text-white p-1" title="Excluir"><Trash2 className="w-4 h-4" /></button>
                        </td>
                      </tr>
@@ -766,14 +759,14 @@ const AdminView: React.FC<{
                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                       <div>
                         <label className="block text-xs text-gray-500 uppercase font-bold mb-1">Nome do Produto</label>
-                        <input type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#00B8D4] outline-none" />
+                        <input type="text" value={formData.name} onChange={e => setFormData({...formData, name: e.target.value})} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#E8FF00] outline-none" />
                       </div>
                       <div>
                         <label className="block text-xs text-gray-500 uppercase font-bold mb-1">Categoria</label>
                         <select value={formData.category_id || ''} onChange={e => {
                           const selectedCat = dbCategories.find(c => c.id === e.target.value);
                           setFormData({...formData, category_id: e.target.value, category: selectedCat?.name || ''});
-                        }} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#00B8D4] outline-none appearance-none">
+                        }} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#E8FF00] outline-none appearance-none">
                           <option value="">Selecione...</option>
                           {dbCategories.map(cat => <option key={cat.id} value={cat.id}>{cat.name}</option>)}
                         </select>
@@ -782,25 +775,25 @@ const AdminView: React.FC<{
                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                       <div>
                         <label className="block text-xs text-gray-500 uppercase font-bold mb-1">Preço (R$)</label>
-                        <input type="number" step="0.01" value={formData.price} onChange={e => setFormData({...formData, price: parseFloat(e.target.value)})} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#00B8D4] outline-none" />
+                        <input type="number" step="0.01" value={formData.price} onChange={e => setFormData({...formData, price: parseFloat(e.target.value)})} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#E8FF00] outline-none" />
                       </div>
                       <div>
                         <label className="block text-xs text-gray-500 uppercase font-bold mb-1">Estoque</label>
-                        <input type="number" value={formData.stock} onChange={e => setFormData({...formData, stock: parseInt(e.target.value)})} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#00B8D4] outline-none" />
+                        <input type="number" value={formData.stock} onChange={e => setFormData({...formData, stock: parseInt(e.target.value)})} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#E8FF00] outline-none" />
                       </div>
                       <div>
-                        <label className="block text-xs text-gray-500 uppercase font-bold mb-1">Tamanho/Dimensões</label>
-                        <input type="text" placeholder="Ex: 15-20cm" value={formData.size} onChange={e => setFormData({...formData, size: e.target.value})} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#00B8D4] outline-none" />
+                        <label className="block text-xs text-gray-500 uppercase font-bold mb-1">Tamanho</label>
+                        <input type="text" placeholder="Ex: P, M, G, GG" value={formData.size} onChange={e => setFormData({...formData, size: e.target.value})} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#E8FF00] outline-none" />
                       </div>
                    </div>
                    <div className="mb-4">
                       <label className="block text-xs text-gray-500 uppercase font-bold mb-1">Descrição Detalhada</label>
-                      <textarea rows={4} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#00B8D4] outline-none resize-none" />
+                      <textarea rows={4} value={formData.description} onChange={e => setFormData({...formData, description: e.target.value})} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#E8FF00] outline-none resize-none" />
                    </div>
                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs text-gray-500 uppercase font-bold mb-1">pH Ideal</label>
-                        <input type="text" placeholder="Ex: 6.8 - 7.0" value={formData.ph} onChange={e => setFormData({...formData, ph: e.target.value})} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#00B8D4] outline-none" />
+                        <label className="block text-xs text-gray-500 uppercase font-bold mb-1">Material</label>
+                        <input type="text" placeholder="Ex: Algodao, Poliester" value={formData.material || ''} onChange={e => setFormData({...formData, material: e.target.value})} className="w-full bg-[#050505] border border-[#333] rounded p-3 text-white focus:border-[#E8FF00] outline-none" />
                       </div>
                       <div>
                         <label className="block text-xs text-gray-500 uppercase font-bold mb-1">Chave Pix Específica (Opcional)</label>
@@ -808,7 +801,7 @@ const AdminView: React.FC<{
                            type="text" 
                            value={formData.pixKey} 
                            onChange={handlePixChange}
-                           className={`w-full bg-[#050505] border rounded p-3 text-white focus:outline-none transition-colors ${pixKeyError ? 'border-red-500 focus:border-red-500' : 'border-[#333] focus:border-[#00B8D4]'}`} 
+                           className={`w-full bg-[#050505] border rounded p-3 text-white focus:outline-none transition-colors ${pixKeyError ? 'border-red-500 focus:border-red-500' : 'border-[#333] focus:border-[#E8FF00]'}`} 
                         />
                       </div>
                    </div>
@@ -825,7 +818,7 @@ const AdminView: React.FC<{
                            key={col} 
                            type="button"
                            onClick={() => toggleCollection(col)}
-                           className={`px-3 py-1 rounded-full text-xs font-bold uppercase transition-all border ${formData.collections?.includes(col) ? 'bg-[#00B8D4] text-black border-[#00B8D4]' : 'bg-[#050505] text-gray-500 border-[#333] hover:border-[#00B8D4]'}`}
+                           className={`px-3 py-1 rounded-full text-xs font-bold uppercase transition-all border ${formData.collections?.includes(col) ? 'bg-[#E8FF00] text-black border-[#E8FF00]' : 'bg-[#050505] text-gray-500 border-[#333] hover:border-[#E8FF00]'}`}
                          >
                            {col}
                          </button>
@@ -842,9 +835,9 @@ const AdminView: React.FC<{
                          value={newTag} 
                          onChange={e => setNewTag(e.target.value)}
                          onKeyDown={e => e.key === 'Enter' && (e.preventDefault(), addTag())}
-                         className="flex-1 bg-[#050505] border border-[#333] rounded p-2 text-sm text-white focus:border-[#00B8D4] outline-none" 
+                         className="flex-1 bg-[#050505] border border-[#333] rounded p-2 text-sm text-white focus:border-[#E8FF00] outline-none" 
                        />
-                       <button type="button" onClick={addTag} className="bg-[#222] hover:bg-[#00B8D4] hover:text-black text-white px-4 rounded font-bold text-sm transition-colors">+</button>
+                       <button type="button" onClick={addTag} className="bg-[#222] hover:bg-[#E8FF00] hover:text-black text-white px-4 rounded font-bold text-sm transition-colors">+</button>
                      </div>
                      <div className="flex flex-wrap gap-2">
                        {formData.tags?.map(tag => (
@@ -861,7 +854,7 @@ const AdminView: React.FC<{
              <div className="space-y-6">
                 <div className="bg-[#111] p-6 rounded-2xl border border-[#333]">
                    <h3 className="text-white font-bold uppercase tracking-widest text-sm mb-6 border-b border-[#222] pb-2">Mídia</h3>
-                   <div className="aspect-square bg-[#050505] border-2 border-dashed border-[#333] rounded-xl flex flex-col items-center justify-center relative overflow-hidden group hover:border-[#00B8D4] transition-colors">
+                   <div className="aspect-square bg-[#050505] border-2 border-dashed border-[#333] rounded-xl flex flex-col items-center justify-center relative overflow-hidden group hover:border-[#E8FF00] transition-colors">
                       {previewImage ? (
                         <img src={previewImage} className="w-full h-full object-cover" />
                       ) : (
@@ -872,7 +865,7 @@ const AdminView: React.FC<{
                       )}
                       <input type="file" accept="image/*" onChange={handleImageChange} className="absolute inset-0 opacity-0 cursor-pointer z-10" />
                       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
-                         <p className="text-[#00B8D4] font-bold text-sm uppercase">Alterar Imagem</p>
+                         <p className="text-[#E8FF00] font-bold text-sm uppercase">Alterar Imagem</p>
                       </div>
                    </div>
                    <p className="text-[10px] text-gray-500 mt-4 text-center">Clique na área acima para fazer upload. (Max 5MB)</p>
@@ -882,7 +875,7 @@ const AdminView: React.FC<{
                    <button 
                      onClick={handleSaveProduct} 
                      disabled={isLoadingAction}
-                     className="w-full bg-[#00B8D4] text-black py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-white transition-colors flex items-center justify-center gap-2 disabled:opacity-50 mb-3"
+                     className="w-full bg-[#E8FF00] text-black py-4 rounded-xl font-bold uppercase tracking-widest hover:bg-white transition-colors flex items-center justify-center gap-2 disabled:opacity-50 mb-3"
                    >
                      {isLoadingAction ? <RefreshCw className="w-5 h-5 animate-spin"/> : <Save className="w-5 h-5" />}
                      {editingId ? 'Atualizar Produto' : 'Criar Produto'}
@@ -959,7 +952,7 @@ const AppContent = () => {
   }, [location]);
 
   return (
-    <div className="bg-[#050505] min-h-screen text-white font-sans selection:bg-[#00B8D4] selection:text-black">
+    <div className="bg-[#050505] min-h-screen text-white font-sans selection:bg-[#E8FF00] selection:text-black">
         <FluidBackground />
         
         <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
@@ -976,7 +969,7 @@ const AppContent = () => {
         {cart.length > 0 && (
           <button 
             onClick={() => setIsCartOpen(true)}
-            className="fixed top-4 right-4 md:top-8 md:right-8 z-40 bg-[#00B8D4] text-black p-4 rounded-full shadow-[0_0_20px_rgba(0,184,212,0.4)] hover:scale-105 transition-transform"
+            className="fixed top-4 right-4 md:top-8 md:right-8 z-40 bg-[#E8FF00] text-black p-4 rounded-full shadow-[0_0_20px_rgba(0,184,212,0.4)] hover:scale-105 transition-transform"
           >
             <ShoppingBag className="w-6 h-6" />
             <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#050505]">

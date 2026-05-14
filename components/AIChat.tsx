@@ -15,13 +15,13 @@ const motion = framerMotion as any;
 const AIChat: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { role: 'model', text: 'Olá! Bem-vindo à Aquarismo Panucci! Como posso ajudar com seu aquário hoje? 🐠' }
+    { role: 'model', text: 'Ola! Bem-vindo a Favela +Q Chick! Como posso ajudar com seu pedido hoje?' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
-  const whatsappUrl = `https://api.whatsapp.com/send?phone=5511971036922&text=${encodeURIComponent("Olá Aquarismo Panucci! Gostaria de saber mais sobre as espécies e produtos.")}`;
+  const whatsappUrl = `https://api.whatsapp.com/send?phone=5511977668767&text=${encodeURIComponent("Ola Favela +Q Chick! Gostaria de saber mais sobre as pecas.")}`;
 
   const scrollToBottom = () => {
     if (chatContainerRef.current) {
@@ -64,10 +64,10 @@ const AIChat: React.FC = () => {
             className="mb-4 w-[90vw] md:w-96 bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-2xl"
           >
             {/* Header */}
-            <div className="bg-[#00B8D4] p-4 flex justify-between items-center border-b border-black/10">
+            <div className="bg-[#E8FF00] p-4 flex justify-between items-center border-b border-black/10">
               <div className="flex items-center gap-2">
                 <Droplets className="w-5 h-5 text-black" />
-                <h3 className="font-heading font-bold text-black tracking-wider uppercase text-xs">Suporte Aquarismo Panucci</h3>
+                <h3 className="font-heading font-bold text-black tracking-wider uppercase text-xs">Suporte Favela +Q Chick</h3>
               </div>
               
               <div className="flex items-center gap-3">
@@ -100,7 +100,7 @@ const AIChat: React.FC = () => {
                   <div
                     className={`max-w-[85%] p-3 rounded-lg text-sm leading-relaxed ${
                       msg.role === 'user'
-                        ? 'bg-[#00B8D4] text-black font-medium rounded-tr-none shadow-md border border-[#0097A7]'
+                        ? 'bg-[#E8FF00] text-black font-medium rounded-tr-none shadow-md border border-[#0097A7]'
                         : 'bg-white text-[#1A2F25] rounded-tl-none border border-[#E2E8F0] shadow-sm'
                     }`}
                   >
@@ -111,9 +111,9 @@ const AIChat: React.FC = () => {
               {isLoading && (
                 <div className="flex justify-start">
                   <div className="bg-white p-3 rounded-lg rounded-tl-none flex gap-1 border border-[#E2E8F0]">
-                    <span className="w-1.5 h-1.5 bg-[#00B8D4] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                    <span className="w-1.5 h-1.5 bg-[#00B8D4] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                    <span className="w-1.5 h-1.5 bg-[#00B8D4] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                    <span className="w-1.5 h-1.5 bg-[#E8FF00] rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
+                    <span className="w-1.5 h-1.5 bg-[#E8FF00] rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
+                    <span className="w-1.5 h-1.5 bg-[#E8FF00] rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
                   </div>
                 </div>
               )}
