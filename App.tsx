@@ -221,7 +221,7 @@ const HomeView: React.FC<{ products: Product[], onNavigate: (path: string) => vo
             products.slice(0, 3).map(p => (
               <div key={p.id} className="rounded-xl overflow-hidden shadow-2xl border border-[#222] bg-[#0a0a0a]">
                 <ArtistCard 
-                  artist={{ id: p.id, name: p.name, genre: `R$ ${p.price.toFixed(2)}`, image: p.image, day: p.category, description: p.description }} 
+                  artist={{ id: p.id, name: p.name, genre: `R$ ${p.price.toFixed(2)}`, image: p.image, day: p.category || '', description: p.description }} 
                   onClick={() => onNavigate(`/product/${p.id}`)} 
                   onAddToCart={() => onAddToCart(p)}
                   onShare={() => onNavigate(`/product/${p.id}`)}
@@ -307,7 +307,7 @@ const CatalogView: React.FC<{ products: Product[], onAddToCart: (p: Product) => 
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
               {currentProducts.map((p) => (
                 <div key={p.id} className="rounded-xl overflow-hidden shadow-lg border border-[#222] bg-[#0a0a0a] hover:border-[#00B8D4] transition-all group">
-                  <ArtistCard artist={{ id: p.id, name: p.name, genre: `R$ ${p.price.toFixed(2)}`, image: p.image, day: p.category, description: p.description }} onClick={() => onNavigate(`/product/${p.id}`)} onAddToCart={() => onAddToCart(p)} onShare={() => onNavigate(`/product/${p.id}`)} />
+                  <ArtistCard artist={{ id: p.id, name: p.name, genre: `R$ ${p.price.toFixed(2)}`, image: p.image, day: p.category || '', description: p.description }} onClick={() => onNavigate(`/product/${p.id}`)} onAddToCart={() => onAddToCart(p)} onShare={() => onNavigate(`/product/${p.id}`)} />
                   <div className="p-4 bg-[#0a0a0a]">
                      <p className="text-[10px] text-[#00B8D4] font-bold uppercase tracking-wider mb-1 truncate">{p.category}</p>
                      <h3 className="text-white font-bold truncate mb-2 text-sm md:text-base">{p.name}</h3>
