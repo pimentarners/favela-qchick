@@ -52,7 +52,7 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, cart, onUpda
             className="fixed top-0 right-0 h-full w-full max-w-md bg-[#0a0a0a] z-50 flex flex-col border-l border-[#222] shadow-[0_0_50px_rgba(0,0,0,0.8)]"
           >
             {/* Header */}
-            <div className="bg-[#D4FF00] text-black h-16 flex items-center justify-between px-6 shrink-0">
+            <div className="bg-[#00B8D4] text-black h-16 flex items-center justify-between px-6 shrink-0">
               <div className="flex items-center gap-2">
                 <ShoppingBagIcon className="w-5 h-5" />
                 <h2 className="font-bold tracking-wider text-sm">SEU PEDIDO</h2>
@@ -80,7 +80,7 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, cart, onUpda
                     {/* Item Details */}
                     <div className="flex-1 flex flex-col justify-center">
                       <h3 className="text-white text-xs font-bold uppercase truncate">{item.name}</h3>
-                      <p className="text-[#D4FF00] font-bold text-sm mt-1">R$ {item.price.toFixed(2)}</p>
+                      <p className="text-[#00B8D4] font-bold text-sm mt-1">R$ {item.price.toFixed(2)}</p>
                       
                       {/* Quantity Controls */}
                       <div className="flex items-center gap-3 mt-2">
@@ -117,17 +117,17 @@ const CartSidebar: React.FC<CartSidebarProps> = ({ isOpen, onClose, cart, onUpda
               <div className="border-t border-[#222] p-6 bg-[#0a0a0a] shrink-0">
                 <div className="flex justify-between items-center mb-6">
                   <span className="text-gray-500 text-xs font-bold tracking-widest uppercase">Total Estimado</span>
-                  <span className="text-[#D4FF00] text-2xl font-bold">R$ {total.toFixed(2)}</span>
+                  <span className="text-[#00B8D4] text-2xl font-bold">R$ {total.toFixed(2)}</span>
                 </div>
                 
                 <button 
                   onClick={handleCheckout}
-                  className="w-full bg-[#D4FF00] hover:bg-white text-black py-4 rounded-xl font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-3 relative group"
+                  className="w-full bg-[#00B8D4] hover:bg-white text-black py-4 rounded-xl font-bold uppercase tracking-widest transition-all flex items-center justify-center gap-3 relative group"
                 >
                   <MessageCircle className="w-5 h-5" />
                   Enviar Pedido
                   <div className="absolute right-4 w-8 h-8 bg-black rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <div className="w-2 h-2 bg-[#D4FF00] rounded-full" />
+                    <div className="w-2 h-2 bg-[#00B8D4] rounded-full" />
                   </div>
                 </button>
               </div>

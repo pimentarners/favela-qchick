@@ -976,7 +976,7 @@ const AppContent = () => {
         {cart.length > 0 && (
           <button 
             onClick={() => setIsCartOpen(true)}
-            className="fixed top-4 right-4 md:top-8 md:right-8 z-40 bg-[#D4FF00] text-black p-4 rounded-full shadow-[0_0_20px_rgba(212,255,0,0.4)] hover:scale-105 transition-transform"
+            className="fixed top-4 right-4 md:top-8 md:right-8 z-40 bg-[#00B8D4] text-black p-4 rounded-full shadow-[0_0_20px_rgba(0,184,212,0.4)] hover:scale-105 transition-transform"
           >
             <ShoppingBag className="w-6 h-6" />
             <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#050505]">
