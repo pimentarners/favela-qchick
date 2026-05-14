@@ -63,6 +63,10 @@ export interface Product {
   collections?: string[];  // nomes das coleções
 }
 
+export interface CartItem extends Product {
+  quantity: number;
+}
+
 // =============================================================
 // PEDIDOS
 // =============================================================

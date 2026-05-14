@@ -15,7 +15,8 @@ import GradientText from './components/GlitchText';
 import ArtistCard from './components/ArtistCard';
 import Footer from './components/Footer';
 import PWAInstallPrompt from './components/PWAInstallPrompt'; 
-import { Product, Category } from './types';
+import CartSidebar from './components/CartSidebar';
+import { Product, Category, CartItem } from './types';
 import { supabase } from './supabaseClient';
 import { saveProduct, deleteProduct, deleteProductBatch, fetchCategories } from './services/supabaseService';
 import FloatingWhatsApp from './components/FloatingWhatsApp';
@@ -909,8 +910,9 @@ const AppContent = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
-  // Cart state could be more complex, but for now simple array
-  const [cart, setCart] = useState<Product[]>([]);
+  // Cart state
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const showToast = (message: string, type: ToastType) => {
     const id = Date.now().toString();
@@ -922,8 +924,28 @@ const AppContent = () => {
   };
 
   const addToCart = (product: Product) => {
-    setCart(prev => [...prev, product]);
+    setCart(prev => {
+      const existing = prev.find(item => item.id === product.id);
+      if (existing) {
+        return prev.map(item => item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item);
+      }
+      return [...prev, { ...product, quantity: 1 }];
+    });
     showToast(`${product.name} adicionado ao carrinho!`, 'success');
+  };
+
+  const updateCartQuantity = (id: string, delta: number) => {
+    setCart(prev => prev.map(item => {
+      if (item.id === id) {
+        const newQuantity = Math.max(1, item.quantity + delta);
+        return { ...item, quantity: newQuantity };
+      }
+      return item;
+    }));
+  };
+
+  const removeCartItem = (id: string) => {
+    setCart(prev => prev.filter(item => item.id !== id));
   };
   
   const handleNavigate = (path: string) => {
@@ -941,6 +963,27 @@ const AppContent = () => {
         <FluidBackground />
         
         <Sidebar isOpen={isSidebarOpen} setIsOpen={setIsSidebarOpen} />
+        
+        <CartSidebar 
+          isOpen={isCartOpen} 
+          onClose={() => setIsCartOpen(false)} 
+          cart={cart}
+          onUpdateQuantity={updateCartQuantity}
+          onRemoveItem={removeCartItem}
+        />
+
+        {/* Floating Cart Button */}
+        {cart.length > 0 && (
+          <button 
+            onClick={() => setIsCartOpen(true)}
+            className="fixed top-4 right-4 md:top-8 md:right-8 z-40 bg-[#D4FF00] text-black p-4 rounded-full shadow-[0_0_20px_rgba(212,255,0,0.4)] hover:scale-105 transition-transform"
+          >
+            <ShoppingBag className="w-6 h-6" />
+            <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-[#050505]">
+              {cart.reduce((acc, item) => acc + item.quantity, 0)}
+            </span>
+          </button>
+        )}
         
         {/* Mobile Sidebar Toggle Button - Only visible when sidebar is closed (handled by z-index or conditional) */}
         {/* Sidebar z-index is 50. This button z-index 40. */}
