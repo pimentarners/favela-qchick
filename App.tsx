@@ -361,7 +361,7 @@ const ProductDetailView: React.FC<{ products: Product[], onNavigate: (path: stri
               </div>
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6 leading-tight text-white">{product.name}</h1>
               <div className="flex items-center gap-6 mb-8 pb-8 border-b border-[#222]">
-                 <p className="text-4xl font-bold text-[#E8FF00] drop-shadow-[0_0_15px_rgba(0,184,212,0.3)]">R$ {product.price.toFixed(2)}</p>
+                 <p className="text-4xl font-bold text-[#E8FF00] drop-shadow-[0_0_15px_rgba(232,255,0,0.3)]">R$ {product.price.toFixed(2)}</p>
                  {product.stock > 0 ? (
                    <span className="px-4 py-2 bg-[#E8FF00]/10 text-[#E8FF00] text-xs font-bold uppercase rounded-full border border-[#E8FF00]/20 flex items-center gap-2"><div className="w-2 h-2 bg-[#E8FF00] rounded-full animate-pulse" /> Disponível</span>
                  ) : (
@@ -372,14 +372,14 @@ const ProductDetailView: React.FC<{ products: Product[], onNavigate: (path: stri
                  <h3 className="text-sm font-bold uppercase tracking-widest text-gray-500 mb-4">Detalhes do Produto</h3>
                  <div className="prose prose-invert max-w-none text-gray-300 leading-relaxed text-lg whitespace-pre-line"><p>{product.description || "Descrição não disponível."}</p></div>
               </div>
-              {(product.size || product.ph) && (
+              {(product.size || product.material) && (
                 <div className="grid grid-cols-2 gap-4 mb-10">
                    {product.size && (<div className="p-4 bg-[#111] border border-[#333] rounded-xl flex flex-col"><span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-1">Tamanho</span><span className="text-white font-mono text-lg">{product.size}</span></div>)}
-                   {product.ph && (<div className="p-4 bg-[#111] border border-[#333] rounded-xl flex flex-col"><span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-1">pH Ideal</span><span className="text-white font-mono text-lg">{product.ph}</span></div>)}
+                   {product.material && (<div className="p-4 bg-[#111] border border-[#333] rounded-xl flex flex-col"><span className="text-[10px] text-gray-500 uppercase font-bold tracking-wider mb-1">Material</span><span className="text-white font-mono text-lg">{product.material}</span></div>)}
                 </div>
               )}
               <div className="mt-auto flex flex-col gap-4 fixed bottom-0 left-0 right-0 p-4 bg-[#050505]/90 backdrop-blur-md border-t border-[#333] z-50 md:static md:bg-transparent md:p-0 md:border-0">
-                 <button onClick={() => onAddToCart(product)} disabled={product.stock <= 0} className="w-full bg-[#E8FF00] hover:bg-white hover:text-black text-black py-4 md:py-5 rounded-xl font-black uppercase tracking-widest text-lg transition-all shadow-[0_0_30px_rgba(0,184,212,0.3)] hover:shadow-[0_0_50px_rgba(0,184,212,0.6)] transform hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"><ShoppingBag className="w-6 h-6" /> {product.stock > 0 ? 'Adicionar ao Carrinho' : 'Indisponível'}</button>
+                 <button onClick={() => onAddToCart(product)} disabled={product.stock <= 0} className="w-full bg-[#E8FF00] hover:bg-white hover:text-black text-black py-4 md:py-5 rounded-xl font-black uppercase tracking-widest text-lg transition-all shadow-[0_0_30px_rgba(232,255,0,0.3)] hover:shadow-[0_0_50px_rgba(232,255,0,0.6)] transform hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-3"><ShoppingBag className="w-6 h-6" /> {product.stock > 0 ? 'Adicionar ao Carrinho' : 'Indisponível'}</button>
                  <button onClick={() => { navigator.clipboard.writeText(product.pixKey || STORE_PIX_KEY); onShowToast('Chave Pix copiada.', 'success'); }} className="w-full bg-[#111] hover:bg-[#222] text-gray-400 hover:text-white py-3 rounded-xl font-bold uppercase tracking-widest transition-all border border-[#333] flex items-center justify-center gap-2 text-sm"><PixIcon className="w-4 h-4" /> Pagamento Direto (Pix)</button>
               </div>
               <div className="h-24 md:hidden" />
@@ -418,7 +418,7 @@ const AdminView: React.FC<{
 
   const [formData, setFormData] = useState<Partial<Product>>({
     name: '', category: '', category_id: '', price: 0, stock: 1, description: '', 
-    ph: '', size: '', pixKey: STORE_PIX_KEY, tags: [], collections: []
+    material: '', size: '', pixKey: STORE_PIX_KEY, tags: [], collections: []
   });
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string>('');
@@ -437,7 +437,7 @@ const AdminView: React.FC<{
   };
 
   const resetForm = () => {
-    setFormData({ name: '', category: '', category_id: '', price: 0, stock: 1, description: '', ph: '', size: '', pixKey: STORE_PIX_KEY, tags: [], collections: [] });
+    setFormData({ name: '', category: '', category_id: '', price: 0, stock: 1, description: '', material: '', size: '', pixKey: STORE_PIX_KEY, tags: [], collections: [] });
     setImageFile(null);
     setPreviewImage('');
     setEditingId(null);
